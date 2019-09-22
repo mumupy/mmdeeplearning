@@ -14,14 +14,15 @@ env:
     - CODECOV_TOKEN="290ba3ff-d885-445d-a8aa-ea7adae29a3c"
 
 install:
+  - pip install codecov
   - python -m pip install --upgrade pip
   - pip install -r requirements.txt
 
 script:
-  - python main.py travis
-  - coverage run main.py travis
+  - python travis.py
+  - coverage run travis.py
   - coverage report
   - coverage html -d covhtml
 
 after_success:
-  - codecov
+  - codecov --token="290ba3ff-d885-445d-a8aa-ea7adae29a3c"
