@@ -1,7 +1,5 @@
-mxnet框架
-=========
-
-
+mxnet
+=====
 
 ::
 
@@ -12,3 +10,5 @@ mxnet框架
 
 .. toctree::
     :maxdepth: 1
+
+    mxnet/install

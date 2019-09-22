@@ -20,6 +20,8 @@
 [Matplotlib 官网文档](https://numpy.org/devdocs/)
 
 [Tensorflow 官网文档](http://www.tensorfly.cn/)
+
+[动手学深度学习](https://zh.d2l.ai/index.html)
  
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  

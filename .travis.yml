@@ -1,15 +1,17 @@
 language: python
 
+os: linux
+
 cache:
   directories:
     - "$HOME/.cache/pip"
-#    - "$HOME/.pyenv"
 
 python:
-  - "2.7"
+  - "3.5.2"
 
 env:
-  - DJANGO_VERSION=1.11.5
+  global:
+    - CODECOV_TOKEN="290ba3ff-d885-445d-a8aa-ea7adae29a3c"
 
 install:
   - python -m pip install --upgrade pip
