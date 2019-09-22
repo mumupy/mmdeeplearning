@@ -1,0 +1,2 @@
+# mmdeeplearning
+mmdeeplearning是一个学习深度学习框架的demo项目，通过该项目了解深度学习的基本理念和各个深度学习框架的使用方式和原理
