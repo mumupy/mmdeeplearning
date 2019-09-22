@@ -4,7 +4,12 @@
 # @Author  : ganliang
 # @File    : msymbol.py
 # @Desc    : 网络
+
 from mxnet import symbol
 
-s = symbol.random_normal(0, 1, (3, 4))
-print(s)
+from src.config import logger
+
+
+def random_normal():
+    s = symbol.random_normal(0, 1, (3, 4))
+    logger.info(s)

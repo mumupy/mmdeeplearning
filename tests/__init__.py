@@ -3,5 +3,6 @@
 # @Time    : 2019/9/22 9:54
 # @Author  : ganliang
 # @File    : __init__.py.py
-# @Desc    : 代码
+# @Desc    : 测试用例模块
 
+from . import runner

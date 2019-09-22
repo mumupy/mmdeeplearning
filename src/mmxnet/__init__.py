@@ -4,3 +4,6 @@
 # @Author  : ganliang
 # @File    : __init__.py.py
 # @Desc    : mxnet深度学习框架
+
+from . import mndarray
+from . import msymbol

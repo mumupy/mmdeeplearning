@@ -3,3 +3,4 @@ numpy
 mxnet
 sphinx_rtd_theme
 tensorflow
+xmlrunner

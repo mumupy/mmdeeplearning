@@ -16,11 +16,12 @@ env:
 install:
   - pip install codecov
   - python -m pip install --upgrade pip
+  - python -m pip install --upgrade setuptools
   - pip install -r requirements.txt
 
 script:
-  - python travis.py
-  - coverage run travis.py
+  - python tests/runner.py
+  - coverage run tests/runner.py
   - coverage report
   - coverage html -d covhtml
 
