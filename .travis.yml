@@ -1,0 +1,25 @@
+language: python
+
+cache:
+  directories:
+    - "$HOME/.cache/pip"
+#    - "$HOME/.pyenv"
+
+python:
+  - "2.7"
+
+env:
+  - DJANGO_VERSION=1.11.5
+
+install:
+  - python -m pip install --upgrade pip
+  - pip install -r requirements.txt
+
+script:
+  - python main.py travis
+  - coverage run main.py travis
+  - coverage report
+  - coverage html -d covhtml
+
+after_success:
+  - codecov
