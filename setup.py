@@ -4,6 +4,7 @@
 # @Author  : ganliang
 # @File    : setup.py.py
 # @Desc    : 安装包
+import io
 
 from setuptools import setup, find_packages
 
@@ -31,7 +32,7 @@ from setuptools import setup, find_packages
 setup(name="mmdeeplearning",
       version="0.0.1",
       description="""mmdeeplearning是一个学习深度学习框架的demo项目，通过该项目了解深度学习的基本理念和各个深度学习框架的使用方式和原理。目前主要包含如下几个主要功能模块：1、numpy 高纬度数据模型。 2、matplotlib 绘图组件。3、pandas。4、mxnet 深度学习框架。5、tensorflow 深度学习框架""",
-      long_description=open('README.md', encoding="utf-8").read(),
+      long_description=io.open('README.md', encoding="utf-8").read(),
       long_description_content_type="text/markdown",
       author="甘亮",
       author_email="lovercws@gmail.com",
@@ -44,5 +45,9 @@ setup(name="mmdeeplearning",
       url="https://github.com/mumupy/mmdeeplearning.git",
       install_requires=[],
       scripts=[],
-      entry_points={'deeplearning': ['settings = mmdeeplearning.settings']}
+      entry_points={'deeplearning': ['settings = mmdeeplearning.settings']},
+      classifiers=[
+          'Intended Audience :: Developers',
+          'Programming Language :: Python :: 3.5.2'
+      ]
       )

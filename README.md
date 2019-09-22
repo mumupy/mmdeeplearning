@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/mumupy/mmdeeplearning.svg?branch=master)](https://travis-ci.org/mumupy/mmdeeplearning)
 [![codecov](https://codecov.io/gh/mumupy/mmdeeplearning/branch/master/graph/badge.svg)](https://codecov.io/gh/mumupy/mmdeeplearning)
 [![pypi](https://img.shields.io/pypi/v/mmdeeplearning.svg)](https://pypi.python.org/pypi/mmdeeplearning)
-[![Documentation Status](https://readthedocs.org/projects/mmdeeplearning/badge/?version=latest)](https://mmdeeplearning.readthedocs.io/en/latest/?badge=latest)  
+[![Documentation Status](https://readthedocs.org/projects/mmdeeplearning/badge/?version=latest)](https://mmdeeplearning.readthedocs.io/zh/latest/?badge=latest)
 
 ***mmdeeplearning是一个学习深度学习框架的demo项目，通过该项目了解深度学习的基本理念和各个深度学习框架的使用方式和原理***
 - numpy 高纬度数据模型
@@ -13,7 +13,7 @@
 - tensorflow 深度学习框架
 
 ## 相关阅读  
-[mmdeeplearning 文档](https://mmdeeplearning.readthedocs.io/en/latest/?badge=latest)  
+[mmdeeplearning 文档](https://mmdeeplearning.readthedocs.io/zh/latest/?badge=latest)  
   
 [NumPy 官网文档](https://numpy.org/devdocs/)
 
