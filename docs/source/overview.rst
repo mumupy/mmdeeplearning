@@ -16,10 +16,10 @@ deeplearning
 
 深度学习框架主要包含:
 
+- MXNet
 - Tensorflow
 - Caffe
 - Theano
-- MXNet
 - Torch
 - PyTorch
 

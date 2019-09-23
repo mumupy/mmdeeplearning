@@ -17,6 +17,9 @@ class TestNdarray(unittest.TestCase):
     def test_arange(self):
         mndarray.arange()
 
+    def test_matrix(self):
+        mndarray.matrix()
+
     def test_reshape(self):
         mndarray.reshape()
 
@@ -28,6 +31,18 @@ class TestNdarray(unittest.TestCase):
 
     def test_random(self):
         mndarray.random()
+
+    def test_operator(self):
+        mndarray.operator()
+
+    def test_broadcasting(self):
+        mndarray.broadcasting()
+
+    def test_indexing(self):
+        mndarray.indexing()
+
+    def test_ndarraynumpytransform(self):
+        mndarray.ndarray_numpy_transform()
 
 
 if __name__ == '__main__':

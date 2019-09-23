@@ -1,6 +1,9 @@
 codecov
 numpy
+matplotlib
 mxnet
+IPython
+ipykernel
 sphinx_rtd_theme
 tensorflow
 xmlrunner
