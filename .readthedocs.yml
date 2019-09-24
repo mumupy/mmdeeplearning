@@ -13,7 +13,7 @@ formats:
   - htmlzip
 
 python:
-  version: 3.5.2
+  version: 3.5
   install:
     - requirements: docs/requirements.txt
     - method: pip
