@@ -4,7 +4,6 @@
 # @Author  : ganliang
 # @File    : linearregression.py
 # @Desc    : 线性回归
-import math
 import random
 
 from mxnet import init
@@ -247,7 +246,4 @@ if __name__ == "__main__":
     # linereg()
     # linearregression()
     # liner_gluon()
-    # house_prise_gulon()
-    logger.info(math.log(0.1))
-    logger.info(math.log(8, 2))
-    logger.info(math.log(0.2, 2))
+    house_prise_gulon()

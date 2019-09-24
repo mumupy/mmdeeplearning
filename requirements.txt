@@ -1,9 +1,12 @@
 codecov
 numpy
+d2lzh
+pandas
 matplotlib
 mxnet
 IPython
 ipykernel
-sphinx_rtd_theme
 tensorflow
 xmlrunner
+sphinx_rtd_theme
+sphinx_materialdesign_theme

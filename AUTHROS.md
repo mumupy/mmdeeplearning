@@ -1,1 +1,3 @@
-babymm
+mmdeeplearning is authored by:
+
+* babymm

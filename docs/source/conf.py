@@ -23,7 +23,9 @@ import sphinx_rtd_theme
 project = u'mmdeeplearning'
 copyright = u'2019, babymm'
 author = u'babymm'
-THEME_TOPIC = "sphinx_rtd_theme"
+# THEME_TOPIC = "sphinx_rtd_theme"
+THEME_TOPIC = "sphinx_materialdesign_theme"
+# THEME_TOPIC = "mxtheme"
 
 # The short X.Y version
 version = u''
@@ -129,6 +131,47 @@ elif THEME_TOPIC == "pyramid":
     html_theme = 'pyramid'
 elif THEME_TOPIC == "bizstyle":
     html_theme = 'bizstyle'
+elif THEME_TOPIC == 'sphinx_materialdesign_theme':
+    html_theme = 'sphinx_materialdesign_theme'
+    html_theme_options = {
+        'header_links': [
+            ('Home', 'index', False, 'home'),
+            ("深度学习", "https://zh.d2l.ai/", True, 'launch'),
+            ("PDF", "https://buildmedia.readthedocs.org/media/pdf/mmdeeplearning/latest/mmdeeplearning.pdf", True, ''),
+            ("GitHub", "https://github.com/mumupy/mmdeeplearning", True, 'link')
+        ],
+
+        # Customize css colors.
+        # For details see link.
+        # https://getmdl.io/customize/index.html
+        #
+        # Values: amber, blue, brown, cyan deep_orange, deep_purple, green, grey, indigo, light_blue,
+        #         light_green, lime, orange, pink, purple, red, teal, yellow(Default: indigo)
+        'primary_color': 'indigo',
+        # Values: Same as primary_color. (Default: pink)
+        'accent_color': 'pink',
+
+        # Customize layout.
+        # For details see link.
+        # https://getmdl.io/components/index.html#layout-section
+        'fixed_drawer': True,
+        'fixed_header': True,
+        'header_waterfall': True,
+        'header_scroll': False,
+
+        # Render title in header.
+        # Values: True, False (Default: False)
+        'show_header_title': False,
+        # Render title in drawer.
+        # Values: True, False (Default: True)
+        'show_drawer_title': True,
+        # Render footer.
+        # Values: True, False (Default: True)
+        'show_footer': True
+    }
+elif THEME_TOPIC == 'mxtheme':
+    html_theme_path = ['mxtheme']
+    html_theme = 'mxtheme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -160,30 +203,47 @@ htmlhelp_basename = 'mmdeeplearningdoc'
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
+    # 'papersize' : 'a4paper',
+    'utf8extra': '',
+    'inputenc': '',
+    'babel': r'''\usepackage[english]{babel}''',
+    'preamble': r'''
+        \usepackage{ctex}
+        \setmainfont{Source Serif Pro}
+        \setsansfont{Source Sans Pro}
+        \setmonofont{Source Code Pro}
+        \setCJKmainfont[BoldFont=Source Han Serif SC SemiBold]{Source Han Serif SC}
+        \setCJKsansfont[BoldFont=Source Han Sans SC Medium]{Source Han Sans SC Normal}
+        \setCJKmonofont{Source Han Sans SC Normal}
+        \addto\captionsenglish{\renewcommand{\chaptername}{}}
+        \addto\captionsenglish{\renewcommand{\contentsname}{目录}}
+        \usepackage[draft]{minted}
+        \fvset{breaklines=true, breakanywhere=true}
+        \setlength{\headheight}{13.6pt}
+        \makeatletter
+            \fancypagestyle{normal}{
+                \fancyhf{}
+                \fancyfoot[LE,RO]{{\py@HeaderFamily\thepage}}
+                \fancyfoot[LO]{{\py@HeaderFamily\nouppercase{\rightmark}}}
+                \fancyfoot[RE]{{\py@HeaderFamily\nouppercase{\leftmark}}}
+                \fancyhead[LE,RO]{{\py@HeaderFamily }}
+             }
+        \makeatother
+        \CJKsetecglue{}
+        \usepackage{zhnumber}
+        ''',
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    # 'pointsize': '10pt',
+    'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
     # 'preamble': '',
-    'preamble': r'''
-    \hypersetup{unicode=true}
-    \usepackage{CJKutf8}
-    \DeclareUnicodeCharacter{00A0}{\nobreakspace}
-    \DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
-    \DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
-    \DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
-    \DeclareUnicodeCharacter{2713}{x}
-    \DeclareUnicodeCharacter{27FA}{\ensuremath{\Longleftrightarrow}}
-    \DeclareUnicodeCharacter{221A}{\ensuremath{\sqrt{}}}
-    \DeclareUnicodeCharacter{221B}{\ensuremath{\sqrt[3]{}}}
-    \DeclareUnicodeCharacter{2295}{\ensuremath{\oplus}}
-    \DeclareUnicodeCharacter{2297}{\ensuremath{\otimes}}
-    \begin{CJK}{UTF8}{gbsn}
-    \AtEndDocument{\end{CJK}}
-    ''',
+
+    # Latex figure (float) alignment
+    # 'figure_align': 'htbp',
+    'figure_align': 'H',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

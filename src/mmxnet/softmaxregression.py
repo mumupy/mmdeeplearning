@@ -7,7 +7,8 @@
 import sys
 
 import d2lzh as d2l
-from mxnet.gluon import data as gdata
+from mxnet import init, gluon
+from mxnet.gluon import data as gdata, nn, loss as gloss
 
 from src.config import logger
 
@@ -68,6 +69,27 @@ def mnist_batch():
     logger.info(len(test_iter))
 
 
+def simple_softmax():
+    """
+    softmax简单实现
+    :return:
+    """
+    batch_size = 256
+    train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
+
+    net = nn.Sequential()
+    net.add(nn.Dense(10))
+    net.initialize(init.Normal(sigma=0.01))
+
+    loss = gloss.SoftmaxCrossEntropyLoss()
+    trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.1})
+
+    num_epochs = 10
+    d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size, None,
+                  None, trainer)
+
+
 if __name__ == "__main__":
     # mnist_train()
-    mnist_batch()
+    # mnist_batch()
+    simple_softmax()
