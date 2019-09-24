@@ -10,3 +10,6 @@ tensorflow
 xmlrunner
 sphinx_rtd_theme
 sphinx_materialdesign_theme
+jieba
+awscli
+recommonmark

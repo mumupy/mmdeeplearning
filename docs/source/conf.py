@@ -15,8 +15,23 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-import sphinx_rtd_theme
+import os
 
+import sphinx_rtd_theme
+from pygments.formatters.latex import LatexFormatter
+from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+# Use footnote size for code block.
+from sphinx.highlighting import PygmentsBridge
+
+
+class CustomLatexFormatter(LatexFormatter):
+    def __init__(self, **options):
+        super(CustomLatexFormatter, self).__init__(**options)
+        self.verboptions = r"formatcom=\footnotesize"
+
+
+PygmentsBridge.latex_formatter = CustomLatexFormatter
 # -- Project information -----------------------------------------------------
 
 
@@ -50,6 +65,8 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'nbsphinx',
+    'IPython.sphinxext.ipython_console_highlighting',
     'sphinx.ext.githubpages',
 ]
 
@@ -194,8 +211,14 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 
+html_search_language = 'zh'
 
 # -- Options for HTMLHelp output ---------------------------------------------
+
+import jieba
+
+jieba_dict = os.path.join(os.path.dirname(jieba.__file__), 'dict.txt')
+html_search_options = {'dict': jieba_dict}
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'mmdeeplearningdoc'
@@ -304,3 +327,24 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+
+def image_caption(app, docname, source):
+    for i, src in enumerate(source):
+        out = ''
+        for l in src.split('\n'):
+            if '![' in l and 'img' in l:
+                # Sphinx does not allow very long caption with space, replace space
+                # with a special token
+                l = l.strip().replace(' ', 'Ⓐ')
+            out += l + '\n'
+        source[i] = out
+
+
+def setup(app):
+    app.add_transform(AutoStructify)
+    app.add_config_value('recommonmark_config', {
+    }, True)
+    app.add_javascript('google_analytics.js')
+    app.add_javascript('discuss.js')
+    app.connect('source-read', image_caption)
