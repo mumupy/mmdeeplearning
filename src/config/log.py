@@ -19,4 +19,4 @@ if __name__ == '__main__':
     logger.info('Hello Info Webben')
     logger.error('Hello Error Webben')
 
-__all__ = ["logger"]
+__all__ = ["logger","root_path"]

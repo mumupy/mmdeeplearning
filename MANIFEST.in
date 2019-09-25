@@ -8,3 +8,4 @@ include .readthedocs.yml
 include AUTHROS.md
 include CHANGELOG.md
 recursive-include docs *
+recursive-include data *

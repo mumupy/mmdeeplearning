@@ -5,4 +5,4 @@
 # @File    : __init__.py.py
 # @Desc    : 配置包
 
-from .log import logger
+from .log import logger,root_path
