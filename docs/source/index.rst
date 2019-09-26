@@ -11,8 +11,8 @@ mmdeeplearning 深度学习
    :numbered: 8
 
    overview
+   mxnet
    numpy
    matplotlib
    pandas
-   mxnet
    tensorflow

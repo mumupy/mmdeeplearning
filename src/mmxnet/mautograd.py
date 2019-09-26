@@ -9,9 +9,24 @@ from mxnet import autograd, nd
 from src.config import logger
 
 
+def cal_grad(X):
+    """
+    计算梯度
+    :return:
+    """
+    logger.info(X)
+    logger.info(X.T)
+    X.attach_grad()
+    with autograd.record():
+        y = 2 * X
+        logger.info(y)
+    y.backward()
+    logger.info(X.grad)
+
+
 def auto_grad():
     """
-    对函数  y=2x⊤x  求关于列向量  x  的梯度
+    对函数  y=2x**2  求关于列向量  x  的梯度 4x
     :return:
     """
     x = nd.arange(4).reshape((4, 1))
@@ -72,5 +87,6 @@ def control_grad():
 
 
 if __name__ == "__main__":
+    # cal_grad(nd.arange(6).reshape(6, 1))
     # auto_grad()
     control_grad()

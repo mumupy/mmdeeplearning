@@ -232,9 +232,20 @@ def ndarray_numpy_transform():
     logger.info(type(n))
 
 
+def argmax():
+    a = nd.uniform(0, 5, dtype=np.float32, shape=(3, 4))
+    logger.info("a:")
+    logger.info(a)
+    logger.info(nd.ones(shape=(a.shape[0], 1)) * 3)
+    logger.info(a.argmax(axis=1))
+    logger.info("a.argmax(axis=1)>3")
+    b = a.argmax(axis=1) >= nd.ones(shape=(1, a.shape[0])) * 3
+    logger.info(b)
+
+
 if __name__ == "__main__":
     # arange()
-    matrix()
+    # matrix()
     # reshape()
     # ones()
     # zeros()
@@ -244,3 +255,4 @@ if __name__ == "__main__":
     # broadcasting()
     # indexing()
     # ndarray_numpy_transform()
+    argmax()

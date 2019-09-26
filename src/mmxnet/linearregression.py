@@ -15,34 +15,88 @@ from mxnet.gluon import nn
 from src.config import logger
 
 
+def linreg(X, w, b):
+    """
+    计算模型
+    :param X:
+    :param w:
+    :param b:
+    :return:
+    """
+    return nd.dot(X, w) + b
+
+
+def squared_loss(y_hat, y):
+    """
+    计算损失函数
+    :param y_hat:
+    :param y:
+    :return:
+    """
+    return (y_hat - y.reshape(y_hat.shape)) ** 2 / 2
+
+
+def sgd(params, lr, batch_size):
+    """
+    优化函数
+    :param params:
+    :param lr:
+    :param batch_size:
+    :return:
+    """
+    for param in params:
+        param[:] = param - lr * param.grad / batch_size
+
+
+def data_iter(batch_size, features, labels):
+    """
+    迭代取数据
+    :param batch_size:
+    :param features:
+    :param labels:
+    :return:
+    """
+    num_examples = len(features)
+    indices = list(range(num_examples))
+    random.shuffle(indices)  # 样本的读取顺序是随机的
+    for i in range(0, num_examples, batch_size):
+        j = nd.array(indices[i: min(i + batch_size, num_examples)])
+        yield features.take(j), labels.take(j)  # take函数根据索引返回对应元素
+
+
 def house_prise():
     """
     使用线性回归估算房价
     :return:
     """
 
-    x = nd.array([[120, 2], [100, 1], [130, 3]])
+    # 特征
+    X = nd.array([[120, 2], [100, 1], [130, 3]])
+    logger.info(nd.norm(X, axis=0))
+    # 值
+    lables = nd.array([130, 98, 140])
+    logger.info(nd.norm(lables, axis=0))
 
-    y = nd.array([[1300000], [980000], [1400000]])
+    # 权重 偏差
+    w = nd.random.normal(scale=0.01, shape=(2, 1))
+    b = nd.zeros(shape=(1,))
 
-    logger.info("x:")
-    logger.info(x)
+    w.attach_grad()
+    b.attach_grad()
 
-    logger.info("y:")
-    logger.info(y)
+    for i in range(5):
+        for x, y in data_iter(10, X, lables):
+            with autograd.record():
+                l = squared_loss(linreg(x, w, b), y)
+                logger.info(l.mean().asnumpy())
+            l.backward()
+            sgd([w, b], 0.02, 10)
 
-    w = nd.broadcast_div(y, x)
-    logger.info("nd.broadcast_div(y, x):")
     logger.info(w)
-
-    logger.info("nd.sum(w, axis=0):")
-    aw = nd.sum(w, axis=0) / 3
-    logger.info(aw)
-
-    print((aw * nd.array([100, 2])).norm())
+    logger.info(b)
 
 
-def linereg():
+def linereg_plg():
     from IPython import display
     from matplotlib import pyplot as plt
     from mxnet import nd
@@ -70,51 +124,6 @@ def linereg():
 
 
 def linearregression():
-    def linreg(X, w, b):
-        """
-        计算模型
-        :param X:
-        :param w:
-        :param b:
-        :return:
-        """
-        return nd.dot(X, w) + b
-
-    def squared_loss(y_hat, y):
-        """
-        计算损失函数
-        :param y_hat:
-        :param y:
-        :return:
-        """
-        return (y_hat - y.reshape(y_hat.shape)) ** 2 / 2
-
-    def sgd(params, lr, batch_size):
-        """
-        优化函数
-        :param params:
-        :param lr:
-        :param batch_size:
-        :return:
-        """
-        for param in params:
-            param[:] = param - lr * param.grad / batch_size
-
-    def data_iter(batch_size, features, labels):
-        """
-        迭代取数据
-        :param batch_size:
-        :param features:
-        :param labels:
-        :return:
-        """
-        num_examples = len(features)
-        indices = list(range(num_examples))
-        random.shuffle(indices)  # 样本的读取顺序是随机的
-        for i in range(0, num_examples, batch_size):
-            j = nd.array(indices[i: min(i + batch_size, num_examples)])
-            yield features.take(j), labels.take(j)  # take函数根据索引返回对应元素
-
     num_inputs = 2
     num_examples = 1000
     true_w = [2, -3.4]
@@ -239,6 +248,8 @@ def house_prise_gulon():
     logger.info("预测数据")
     logger.info(dense.weight.data())
     logger.info(dense.bias.data())
+
+    logger.info(net(features))
 
 
 if __name__ == "__main__":

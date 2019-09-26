@@ -53,6 +53,7 @@ def simple_multilayer():
     """
     net = nn.Sequential()
     net.add(nn.Dense(256, activation='relu'), nn.Dense(10))
+    net.add(gluon.nn.Dropout(0.2))
     net.initialize(init.Normal(sigma=0.01))
 
     batch_size = 256

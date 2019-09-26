@@ -1,3 +1,5 @@
 sphinx_rtd_theme
 sphinx_materialdesign_theme
 jieba
+nbsphinx
+recommonmark

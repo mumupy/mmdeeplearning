@@ -7,7 +7,7 @@
 import sys
 
 import d2lzh as d2l
-from mxnet import init, gluon
+from mxnet import init, gluon, autograd
 from mxnet.gluon import data as gdata, nn, loss as gloss
 
 from src.config import logger
@@ -43,7 +43,7 @@ def mnist_train():
     show_fashion_mnist(X, get_fashion_mnist_labels(y))
 
 
-def mnist_batch():
+def gluon_fashion_mnist():
     """
     数据读取经常是训练的性能瓶颈，特别当模型较简单或者计算硬件性能较高时。Gluon的DataLoader中一个很方便的功能是允许使用多进程来加速数据读取
     （暂不支持Windows操作系统）。这里我们通过参数num_workers来设置4个进程读取数据
@@ -55,6 +55,10 @@ def mnist_batch():
         num_workers = 0  # 0表示不用额外的进程来加速读取数据
     else:
         num_workers = 4
+
+    net = nn.Sequential()
+    net.add(nn.Dense(10))
+    net.initialize(init.Normal(sigma=0.01))
 
     mnist_train = gdata.vision.FashionMNIST(train=True)
     mnist_test = gdata.vision.FashionMNIST(train=False)
@@ -68,8 +72,25 @@ def mnist_batch():
     logger.info(len(train_iter))
     logger.info(len(test_iter))
 
+    loss = gloss.SoftmaxCrossEntropyLoss()
+    trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.1})
 
-def simple_softmax():
+    num_epochs = 10
+
+    for i in range(num_epochs):
+        for X, y in train_iter:
+            with autograd.record():
+                l = loss(net(X), y).sum()
+            l.backward()
+            trainer.step(batch_size)
+        for X, y in test_iter:
+            y = y.astype('float32')
+            y_that = (net(X).argmax(axis=1))
+            acc_sum = (y_that == y).sum()
+            logger.info(acc_sum / y.size)
+
+
+def d2l_fashion_mnist():
     """
     softmax简单实现
     :return:
@@ -91,5 +112,5 @@ def simple_softmax():
 
 if __name__ == "__main__":
     # mnist_train()
-    # mnist_batch()
-    simple_softmax()
+    gluon_fashion_mnist()
+    # d2l_fashion_mnist()
