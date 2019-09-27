@@ -3,3 +3,5 @@ sphinx_materialdesign_theme
 jieba
 nbsphinx
 recommonmark
+IPython
+pygments
