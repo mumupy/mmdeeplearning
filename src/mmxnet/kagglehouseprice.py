@@ -202,8 +202,8 @@ def eval_houseprice(k=10, num_epochs=100, lr=5, weight_decay=0, batch_size=64):
 
     # net = get_net()
 
-    train_l, valid_l = k_fold(k, train_features, train_labels, num_epochs, lr, weight_decay, batch_size)
-    # train_l, valid_l = leave_one_out(train_features, train_labels, num_epochs, lr, weight_decay, batch_size, net=net)
+    # train_l, valid_l = k_fold(k, train_features, train_labels, num_epochs, lr, weight_decay, batch_size)
+    train_l, valid_l = leave_one_out(train_features, train_labels, num_epochs, lr, weight_decay, batch_size)
     logger.info('%d-fold validation: avg train rmse %f, avg valid rmse %f' % (k, train_l, valid_l))
 
     train_and_pred(train_features, test_features, train_labels, test_data, num_epochs, lr, weight_decay, batch_size,
