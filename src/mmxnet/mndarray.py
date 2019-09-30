@@ -243,6 +243,11 @@ def argmax():
     logger.info(b)
 
 
+def onehot():
+    X = nd.one_hot(nd.array([1, 2, 3]), 4)
+    logger.info(X)
+
+
 if __name__ == "__main__":
     # arange()
     # matrix()
@@ -255,4 +260,5 @@ if __name__ == "__main__":
     # broadcasting()
     # indexing()
     # ndarray_numpy_transform()
-    argmax()
+    # argmax()
+    onehot()
