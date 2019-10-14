@@ -7,6 +7,8 @@
 
 import os
 
+os.environ.setdefault("MXNET_CPU_WORKER_NTHREADS", "20")
+
 import d2lzh as d2l
 from mxnet import image
 from mxnet.gluon import utils as gutils
@@ -42,6 +44,8 @@ def load_data_pikachu(batch_size, edge_size=256):  # edge_size：输出图像的
 
 
 def pikaqiu():
+
+
     batch_size, edge_size = 32, 256
     train_iter, _ = load_data_pikachu(batch_size, edge_size)
     batch = train_iter.next()
@@ -50,6 +54,7 @@ def pikaqiu():
     axes = d2l.show_images(imgs, 2, 5).flatten()
     for ax, label in zip(axes, batch.label[0][0:10]):
         d2l.show_bboxes(ax, [label[0][1:5] * edge_size], colors=['w'])
+
 
 if __name__ == "__main__":
     pikaqiu()

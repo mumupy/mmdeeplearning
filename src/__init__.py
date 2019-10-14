@@ -5,5 +5,3 @@
 # @File    : __init__.py.py
 # @Desc    : 代码
 
-import win_unicode_console
-win_unicode_console.enable()

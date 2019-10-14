@@ -18,7 +18,7 @@ class TestLinearRegression(unittest.TestCase):
         linearregression.house_prise()
 
     def test_linereg(self):
-        linearregression.linereg()
+        linearregression.linereg_plg()
 
     def test_linearregression(self):
         linearregression.linearregression()

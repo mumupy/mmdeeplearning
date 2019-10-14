@@ -61,6 +61,9 @@ def reshape():
     b = nd.arange(20).reshape(2, 2, 5)
     logger.info(b)
 
+    c = nd.reshape(b, (-1,))
+    logger.info(c)
+
 
 def ones():
     """
@@ -251,7 +254,7 @@ def onehot():
 if __name__ == "__main__":
     # arange()
     # matrix()
-    # reshape()
+    reshape()
     # ones()
     # zeros()
     # random()
@@ -261,4 +264,4 @@ if __name__ == "__main__":
     # indexing()
     # ndarray_numpy_transform()
     # argmax()
-    onehot()
+    # onehot()
