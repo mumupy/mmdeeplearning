@@ -36,3 +36,6 @@ deeplearning
     overview/install
     overview/linearregression
     overview/weightdecay
+    overview/loss
+    overview/concept
+    overview/learing

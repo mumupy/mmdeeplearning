@@ -31,9 +31,7 @@ def get_net():
     net = nn.Sequential()
     # net.add(nn.Dense(1))
 
-    net.add(gluon.nn.Dense(128, activation="relu"))
-    # net.add(gluon.nn.Dense(64, activation="relu"))
-    net.add(gluon.nn.Dropout(0.2))
+    net.add(gluon.nn.Dense(64, activation="relu"))
     net.add(gluon.nn.Dense(1))
 
     net.initialize()
