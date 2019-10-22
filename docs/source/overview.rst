@@ -34,8 +34,11 @@ deeplearning
     :maxdepth: 1
 
     overview/install
-    overview/linearregression
-    overview/weightdecay
-    overview/loss
     overview/concept
     overview/learing
+    overview/regression
+    overview/loss
+    overview/perceptron
+    overview/weightdecay
+
+

@@ -3,22 +3,10 @@
 # @Time    : 2019/9/22 10:42
 # @Author  : ganliang
 # @File    : __init__.py.py
-# @Desc    : tensorflow深度学习框架
-
-import os
-
-from src.config import logger
+# @Desc    : tensorflow深度学习框架(http://c.biancheng.net/tensorflow/)
 
 
-def tensorboard():
-    """
-    启动tensorvoard
-    :return:
-    """
-    stdin, stdout = os.popen("tensorboard --logdir tensorboard")
-    for line in stdout.readlines():
-        logger.info(line)
-
-
-if __name__ == "__main__":
-    tensorboard()
+from . import tf_variable
+from . import tf_constant
+from . import tf_matrix
+from . import tf_operator

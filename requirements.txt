@@ -15,3 +15,5 @@ nbsphinx
 recommonmark
 scikit-learn
 pygments
+Seaborn
+Keras

@@ -26,10 +26,10 @@
 - 先剪枝——在构造过程中，当某个节点满足剪枝条件，则直接停止此分支的构造。
 - 后剪枝——先构造完成完整的决策树，再通过某些条件遍历树进行剪枝。
 
-.. image:: machinelearning_decisiontree.png
+.. image:: /_static/imgs/overview/machinelearning_decisiontree.png
 
 朴素贝叶斯分类器（Naive Bayesian Model，NBM）
-::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::
 
 朴素贝叶斯分类器基于贝叶斯定理及其假设（即特征之间是独立的，是不相互影响的），主要用来解决分类和回归问题。P(A|B) 是后验概率， P(B|A) 是似然，P(A)为先验概率，P(B) 为我们要预测的值。
 
@@ -50,7 +50,7 @@
 最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。利用最小二乘法可以简便地求得未知的数据，并使得这些求得的
 数据与实际数据之间误差的平方和为最小。最小二乘法还可用于曲线拟合。其他一些优化问题也可通过最小化能量或最大化熵用最小二乘法来表达。
 
-.. image:: machinelearning_leastsquares.png
+.. image:: /_static/imgs/overview/machinelearning_leastsquares.png
 
 逻辑回归(Logistic Regression
 ::::::::::::::::::::::::::::
@@ -58,7 +58,7 @@
 逻辑回归模型是一个二分类模型，它选取不同的特征与权重来对样本进行概率分类，用一个log函数计算样本属于某一类的概率。即一个样本会有一定的概率属于一个类，会有一定
 的概率属于另一类，概率大的类即为样本所属类。用于估计某种事物的可能性。
 
-.. image:: machinelearning_logisticreg.png
+.. image:: /_static/imgs/overview/machinelearning_logisticreg.png
 
 支持向量机(SVM)
 :::::::::::::::
@@ -66,7 +66,7 @@
 支持向量机（support vector machine）是一个二分类算法，它可以在N维空间找到一个(N-1)维的超平面，这个超平面可以将这些点分为两类。也就是说，平面内如果存在线性可分的
 两类点，SVM可以找到一条最优的直线将这些点分开。SVM应用范围很广。
 
-.. image:: machinelearning_svm.png
+.. image:: /_static/imgs/overview/machinelearning_svm.png
 
 K最近邻算法(KNN，K-NearestNeighbor)
 :::::::::::::::::::::::::::::::::::
@@ -76,7 +76,7 @@ K最近邻算法(KNN，K-NearestNeighbor)
  在类别决策时，只与极少量的相邻样本有关。由于KNN方法主要靠周围有限的邻近的样本，而不是靠判别类域的方法来确定所属类别的，因此对于类域的交叉或重叠较多的待分样本集来说，
  KNN方法较其他方法更为适合。
 
-.. image:: machinelearning_knn.png
+.. image:: /_static/imgs/overview/machinelearning_knn.png
 
 集成学习(Ensemble Learning)
 :::::::::::::::::::::::::::
@@ -87,7 +87,7 @@ K最近邻算法(KNN，K-NearestNeighbor)
 这是一类非常强大的算法，同时也非常流行。常见的算法包括：Boosting， Bootstrapped Aggregation（Bagging）， AdaBoost，堆叠泛化（Stacked Generalization， Blending），梯度推进
 机（Gradient Boosting Machine, GBM），随机森林（Random Forest）。
 
-.. image:: machinelearning_ensemble.png
+.. image:: /_static/imgs/overview/machinelearning_ensemble.png
 
 
 非监督学习
@@ -114,7 +114,7 @@ K最近邻算法(KNN，K-NearestNeighbor)
 
 聚类算法有很多种，具体如下：中心聚类、关联聚类、密度聚类、概率聚类、降维、神经网络/深度学习。
 
-.. image:: machinelearning_cluster.png
+.. image:: /_static/imgs/overview/machinelearning_cluster.png
 
 K-均值算法(K-Means)
 :::::::::::::::::::
@@ -123,7 +123,7 @@ K-means算法是硬聚类算法，是典型的基于原型的目标函数聚类�
 算法以欧式距离作为相似度测度，它是求对应某一初始聚类中心向量V最优分类，使得评价指标J最小。算法采用误差平方和准则函数作为聚类准则函数。K-means算法是很典型的基于距离的
 聚类算法，采用距离作为相似性的评价指标，即认为两个对象的距离越近，其相似度就越大。该算法认为簇是由距离靠近的对象组成的，因此把得到紧凑且独立的簇作为最终目标。
 
-.. image:: machinelearning_kmeans.png
+.. image:: /_static/imgs/overview/machinelearning_kmeans.png
 
 主成分分析(Principal Component Analysis，PCA)
 :::::::::::::::::::::::::::::::::::::::::::::
@@ -131,7 +131,7 @@ K-means算法是硬聚类算法，是典型的基于原型的目标函数聚类�
 主成分分析是利用正交变换将一些列可能相关数据转换为线性无关数据，从而找到主成分。PCA方法最著名的应用应该是在人脸识别中特征提取及数据降维。
 PCA主要用于简单学习与可视化中数据压缩、简化。但是PCA有一定的局限性，它需要你拥有特定领域的相关知识。对噪音比较多的数据并不适用。
 
-.. image:: machinelearning_pca.png
+.. image:: /_static/imgs/overview/machinelearning_pca.png
 
 SVD矩阵分解(Singular Value Decomposition)
 :::::::::::::::::::::::::::::::::::::::::
@@ -140,14 +140,14 @@ SVD矩阵分解(Singular Value Decomposition)
 
 PCA实际上就是一个简化版本的SVD分解。在计算机视觉领域，第一个脸部识别算法就是基于PCA与SVD的，用特征对脸部进行特征表示，然后降维、最后进行面部匹配。尽管现在面部识别方法复杂，但是基本原理还是类似的。
 
-.. image:: machinelearning_svd.png
+.. image:: /_static/imgs/overview/machinelearning_svd.png
 
 独立成分分析(ICA)
 :::::::::::::::::
 
 独立成分分析（Independent Component Analysis，ICA）是一门统计技术，用于发现存在于随机变量下的隐性因素。ICA为给观测数据定义了一个生成模型。在这个模型中，其认为数据变量是由隐性变量，经一个混合系统线性混合而成，这个混合系统未知。并且假设潜在因素属于非高斯分布、并且相互独立，称之为可观测数据的独立成分。
 
-.. image:: machinelearning_ica.png
+.. image:: /_static/imgs/overview/machinelearning_ica.png
 
 半监督学习
 >>>>>>>>>>
@@ -156,7 +156,7 @@ PCA实际上就是一个简化版本的SVD分解。在计算机视觉领域，�
 同时使用标记数据，来进行模式识别工作。当使用半监督学习时，将会要求尽量少的人员来从事工作，同时，又能够带来比较高的准确性，因此，半监督学习目前正越来越受到人们的
 重视。
 
-.. image:: machinelearning_semi.png
+.. image:: /_static/imgs/overview/machinelearning_semi.png
 
 强化学习
 >>>>>>>>
@@ -173,7 +173,7 @@ Q-Learning算法
 Q-learning要解决的是这样的问题：一个能感知环境的自治agent，怎样通过学习选择能达到其目标的最优动作。
 
 
-.. image:: machinelearning_reinforcement.png
+.. image:: /_static/imgs/overview/machinelearning_reinforcement.png
 
 强化学习目的是构造一个控制策略，使得Agent行为性能达到最大。Agent从复杂的环境中感知信息，对信息进行处理。Agent通过学习改进自身的性能并选择行为，从而产生群体行为的选择，
 个体行为选择和群体行为选择使得Agent作出决策选择某一动作，进而影响环境。增强学习是指从动物学习、随机逼近和优化控制等理论发展而来，是一种无导师在线学习技术，从环境状态到
@@ -181,7 +181,7 @@ Q-learning要解决的是这样的问题：一个能感知环境的自治agent�
 回报值，更新评估函数，完成一次学习过程后，进入下一轮的学习训练，重复循环迭代，直到满足整个学习的条件，终止学习。
 
 
-.. image:: machinelearning_reinforcement2.png
+.. image:: /_static/imgs/overview/machinelearning_reinforcement2.png
 
 Q-Learning是一种无模型的强化学习技术。具体来说，可以使用Q学习来为任何给定的（有限的）马尔可夫决策过程（MDP）找到最优的动作选择策略。它通过学习一个动作价值函数，最终给出在
 给定状态下采取给定动作的预期效用，然后遵循最优策略。一个策略是代理在选择动作后遵循的规则。当这种动作值函数被学习时，可以通过简单地选择每个状态中具有最高值的动作来构建最优策略。
@@ -189,9 +189,9 @@ Q-learning的优点之一是能够比较可用操作的预期效用，而不需�
 从总体奖励的预期值返回到从当前状态开始的所有连续步骤是最大可实现的意义。
 
 
-.. image:: machinelearning_reinforcement3.png
+.. image:: /_static/imgs/overview/machinelearning_reinforcement3.png
 
 强化学习常用算法：TD算法（时间差分学习，Temporal Difference）、SARSA算法、Q-Learning算法等。我们当然也需要了解马尔可夫决策过程（MDP，Markov Decision Processes），这样更利于我们对强化学习的理解。
 
 
-.. image:: machinelearning_reinforcement4.png
+.. image:: /_static/imgs/overview/machinelearning_reinforcement4.png
