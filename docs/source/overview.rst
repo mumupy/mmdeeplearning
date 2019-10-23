@@ -37,8 +37,11 @@ deeplearning
     overview/concept
     overview/learing
     overview/regression
-    overview/loss
     overview/perceptron
+    overview/activationfunction
+    overview/bpn
+    overview/optimizer
     overview/weightdecay
+    overview/loss
 
 
