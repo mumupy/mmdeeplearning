@@ -17,7 +17,7 @@ def tensorboard():
     启动tensorvoard
     :return:
     """
-    stdin, stdout = os.popen("tensorboard --logdir ./tensorboard")
+    stdin, stdout = os.popen("tensorboard --logdir linear_regression")
     for line in stdout.readlines():
         logger.info(line)
 

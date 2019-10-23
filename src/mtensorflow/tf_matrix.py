@@ -214,4 +214,5 @@ def matrix_condition():
     logger.info("tf.argmax(X)\n {0}".format(tf.argmax(X).eval()))
     logger.info("tf.argmin(X)\n {0}".format(tf.argmin(X).eval()))
     logger.info("tf.unique(X)\n {0}".format(tf.unique(X)))
+    logger.info("tf.where(tf.equal(X,tf.constant(1,dtype=tf.float32)))\n {0}".format(tf.where(tf.equal(X,tf.constant(1,dtype=tf.float32))).eval()))
     isses.close()
