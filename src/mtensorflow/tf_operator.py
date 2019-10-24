@@ -25,6 +25,8 @@ def matrix_operator():
     logger.info("tf.mod(X, W)\n%s" % tf.mod(X, W).eval())
     logger.info("tf.divide(X, W)\n%s" % tf.divide(X, W).eval())
     logger.info("tf.matmul(W,X)\n%s" % tf.matmul(W, X).eval())
+    # 相同位置元素进行相乘
+    logger.info("tf.multiply(W,X)\n%s" % tf.multiply(W, X).eval())
     isess.close()
 
 

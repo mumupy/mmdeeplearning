@@ -15,5 +15,7 @@ nbsphinx
 recommonmark
 scikit-learn
 pygments
-Seaborn
+seaborn
 Keras
+h5py
+hdf5

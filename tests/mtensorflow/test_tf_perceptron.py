@@ -15,8 +15,14 @@ class TestTensorflowConstant(unittest.TestCase):
     def test_perceptron(self):
         tf_perceptron.perceptron()
 
-    def test_multiple_perceptron(self):
-        tf_perceptron.multiple_perceptron(epochs=10, learning_rate=0.001, batch_size=200)
+    def test_multiple_perceptron_mnist(self):
+        tf_perceptron.multiple_perceptron_mnist(epochs=10, learning_rate=0.001, batch_size=200)
+
+    def test_multiple_perceptron_boston(self):
+        tf_perceptron.multiple_perceptron_boston(epochs=100, learning_rate=0.001, batch_size=100)
+
+    def test_keras_boston(self):
+        tf_perceptron.keras_boston(epochs=100, learning_rate=0.001, batch_size=100)
 
 
 if __name__ == '__main__':
