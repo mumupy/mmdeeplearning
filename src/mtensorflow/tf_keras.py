@@ -5,14 +5,12 @@
 # @File    : tf_keras.py
 # @Desc    : keras高级api
 
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import seaborn as sns
-import pandas as pd
-import matplotlib.pyplot as plt
-from keras import Sequential
 from keras.layers import Dense
 from keras.losses import mean_squared_error
+from keras.models import Sequential
 from sklearn import datasets
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
@@ -111,3 +109,54 @@ def super_variables(epochs=10, min_loss=0.01, batch_size=200, hidden=30):
             json_file.write(model_json)
             model.save_weights("model.hdf5")
             logger.info("Saved model to disk")
+
+
+def vis_visual():
+    """
+    vis可视化卷积层
+    :return:
+    """
+
+
+def image_classify():
+    """
+    图像分类
+    :return:
+    """
+    import keras.applications as applications
+    from keras.preprocessing.image import img_to_array, load_img
+    from keras.applications import imagenet_utils
+    from PIL import Image
+
+    MODELS = {
+        "vgg16": (applications.VGG16, (224, 224)),
+        "vgg19": (applications.VGG19, (244, 244)),
+        "inception": (applications.InceptionV3, (299, 299)),
+        "xception": (applications.Xception, (299, 299)),
+        "resnet": (applications.ResNet50, (224, 224))
+    }
+
+    def image_load_and_convert(image_path, model):
+        pil_im = Image.open(image_path, "r")
+        plt.imshow(pil_im)
+        image = img_to_array(load_img(image_path, target_size=MODELS[model][1]))
+        image = np.expand_dims(image, axis=0)
+        image = imagenet_utils.preprocess_input(image)
+        return image
+
+    def classify_image(image_path, model):
+        img = image_load_and_convert(image_path, model)
+        Network = MODELS[model][0]
+        model = Network(weights="imagenet")
+        predicts = model.predict(img)
+        p = imagenet_utils.decode_predictions(predicts)
+        for i, (imagenetId, label, prob) in enumerate(p[0]):
+            logger.info("{0} : {1}: {2}".format(i, label, prob * 100))
+
+    def print_model(model):
+        logger.info("Model:{0}".format(model))
+        Network = MODELS[model][0]
+        model = Network(weights="imagenet")
+        logger.info("\n%s" % model.summary())
+
+    print_model("vgg19")

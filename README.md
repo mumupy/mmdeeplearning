@@ -23,6 +23,14 @@
 
 [动手学深度学习](https://zh.d2l.ai/index.html)
  
+[TFLearn高层次的框架](http://tflearn.org/)
+
+[keras:The Python  Deep Learning library](https://keras.io/)
+
+[TensorFlow教程：TensorFlow快速入门教程（非常详细）](http://c.biancheng.net)
+
+[Seaborn，进阶Python数据可视化分析](http://seaborn.pydata.org/)
+
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  
 email:<babymm@aliyun.com>  

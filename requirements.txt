@@ -16,6 +16,7 @@ recommonmark
 scikit-learn
 pygments
 seaborn
-Keras
+keras==2.0.8
 h5py
 hdf5
+keras-vis
