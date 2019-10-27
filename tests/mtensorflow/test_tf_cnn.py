@@ -3,7 +3,7 @@
 # @Time    : 2019/10/25 11:19
 # @Author  : ganliang
 # @File    : test_tf_cnn.py
-# @Desc    : TODO
+# @Desc    : 卷积神经网络测试
 import unittest
 
 from src.mtensorflow import tf_cnn

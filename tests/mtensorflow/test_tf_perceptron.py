@@ -21,9 +21,5 @@ class TestTensorflowConstant(unittest.TestCase):
     def test_multiple_perceptron_boston(self):
         tf_perceptron.multiple_perceptron_boston(epochs=100, learning_rate=0.001, batch_size=100)
 
-    def test_keras_boston(self):
-        tf_perceptron.keras_boston(epochs=100, learning_rate=0.001, batch_size=100)
-
-
 if __name__ == '__main__':
     unittest.main()

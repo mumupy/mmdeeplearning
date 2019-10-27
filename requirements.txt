@@ -19,3 +19,8 @@ seaborn
 keras==2.0.8
 h5py
 keras-vis
+pillow==4.3.0
+librosa
+magenta
+Hypothesis >= 3.58
+pytest >= 4.0.2

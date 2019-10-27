@@ -4,10 +4,12 @@
 # @Author  : ganliang
 # @File    : keras_mnist.py
 # @Desc    : keras的手写数字识别
+import os
+
 import keras
 import matplotlib.pyplot as plt
 
-from src.config import logger
+from src.config import logger, root_path
 
 
 def mnist_info():
@@ -17,7 +19,7 @@ def mnist_info():
     """
     mnist = keras.datasets.mnist
 
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = mnist.load_data(os.path.join(root_path, "data", "mnist", "mnist.npz"))
     logger.info("train shape {0}".format(x_train.shape))
     logger.info("label shape {0}".format(y_train.shape))
     logger.info("test shape {0}".format(x_test.shape))
@@ -38,8 +40,7 @@ def keras_mnist():
     :return:
     """
     mnist = keras.datasets.mnist
-
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    (x_train, y_train), (x_test, y_test) = mnist.load_data(os.path.join(root_path, "data", "mnist", "mnist.npz"))
     x_train, x_test = x_train / 255.0, x_test / 255.0
 
     model = keras.models.Sequential([

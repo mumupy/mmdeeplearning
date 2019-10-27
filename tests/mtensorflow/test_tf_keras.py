@@ -21,6 +21,9 @@ class TestTensorflowKeras(unittest.TestCase):
     def test_image_classify(self):
         tf_keras.image_classify()
 
+    def test_keras_inceptionv3(self):
+        tf_keras.keras_inceptionv3()
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -31,6 +31,8 @@
 
 [Seaborn，进阶Python数据可视化分析](http://seaborn.pydata.org/)
 
+[Neural Machine Translation (seq2seq) Tutorial](https://github.com/tensorflow/nmt/)
+
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  
 email:<babymm@aliyun.com>  

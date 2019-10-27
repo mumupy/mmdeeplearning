@@ -11,6 +11,7 @@ import tensorflow as tf
 from keras.layers import Dense
 from keras.losses import mean_squared_error
 from keras.models import Sequential
+from keras.optimizers import SGD
 from sklearn import datasets
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
@@ -133,7 +134,8 @@ def image_classify():
         "vgg19": (applications.VGG19, (244, 244)),
         "inception": (applications.InceptionV3, (299, 299)),
         "xception": (applications.Xception, (299, 299)),
-        "resnet": (applications.ResNet50, (224, 224))
+        "resnet": (applications.ResNet50, (224, 224)),
+        "mobilenet": (applications.MobileNet, (224, 224))
     }
 
     def image_load_and_convert(image_path, model):
@@ -159,4 +161,34 @@ def image_classify():
         model = Network(weights="imagenet")
         logger.info("\n%s" % model.summary())
 
-    print_model("vgg19")
+    print_model("xception")
+    print_model("resnet")
+    print_model("mobilenet")
+
+
+def keras_inceptionv3():
+    from keras.applications.inception_v3 import InceptionV3
+    from keras.models import Model
+    from keras.layers import Dense, GlobalAveragePooling2D
+    base_mode = InceptionV3(weights="imagenet", include_top=True)
+    X=base_mode.output
+    # X = GlobalAveragePooling2D()(X,data_format="channels_last")
+    X = Dense(1024, activation="relu")(X)
+    predictions = Dense(200, activation="softmax")(X)
+    model = Model(input=base_mode.input, output=predictions)
+
+    # 冻结所有的模型
+    # for layer in base_mode.layers:
+    #     layer.trainable = False
+    # model.compile(optimizer="rmsprop", loss="categorical_crossentropy")
+
+
+    # 冻结前172层
+    for layer in base_mode.layers[:172]:
+        layer.trainable = False
+    for layer in base_mode.layers[172:]:
+        layer.trainable = True
+    # 重新微调优化模型
+    model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss="categorical_crossentropy")
+
+    model.fit_generator(base_mode.inputs,epochs=1,steps_per_epoch=128)
