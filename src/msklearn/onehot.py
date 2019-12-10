@@ -18,7 +18,7 @@ def onehot():
     """
     enc = preprocessing.OneHotEncoder()
     enc.fit([[0, 0, 3], [1, 1, 0], [0, 2, 1], [1, 0, 2]])  # 这里一共有4个数据，3种特征
-    array = enc.transform([[0, 1, 3]]).toarray()  # 这里使用一个新的数据来测试
+    array = enc.transform([[0, 1, 2]]).toarray()  # 这里使用一个新的数据来测试
     print(array)
 
 
