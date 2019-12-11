@@ -5,7 +5,7 @@
 # @File    : test_tf_variable.py
 # @Desc    : 测试tf_variable脚本
 import unittest
-from src.mtensorflow import tf_variable
+from mtensorflow.biancheng import tf_variable
 
 
 class TestTensorflowVariable(unittest.TestCase):

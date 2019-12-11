@@ -7,7 +7,7 @@
 
 import unittest
 
-from src.mtensorflow import tf_activation
+from mtensorflow.biancheng import tf_activation
 
 
 class TestTensorflowActivation(unittest.TestCase):

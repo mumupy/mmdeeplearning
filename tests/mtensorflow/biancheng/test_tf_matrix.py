@@ -6,7 +6,7 @@
 # @Desc    : 矩阵测试
 
 import unittest
-from src.mtensorflow import tf_matrix
+from mtensorflow.biancheng import tf_matrix
 
 
 class TestTensorflowMatrix(unittest.TestCase):

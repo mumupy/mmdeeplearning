@@ -5,7 +5,7 @@
 # @File    : test_tf_gym.py
 # @Desc    : 强化学习测试
 import unittest
-from src.mtensorflow import tf_gym
+from mtensorflow.biancheng import tf_gym
 
 
 class TestTensorflowConstant(unittest.TestCase):

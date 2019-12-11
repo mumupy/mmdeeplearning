@@ -6,7 +6,7 @@
 # @Desc    : kmeans测试
 
 import unittest
-from src.mtensorflow import tf_kmean
+from mtensorflow.biancheng import tf_kmean
 
 
 class TestTensorflowKMean(unittest.TestCase):

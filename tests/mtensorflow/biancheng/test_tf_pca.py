@@ -7,7 +7,7 @@
 
 import unittest
 
-from src.mtensorflow import tf_pca
+from mtensorflow.biancheng import tf_pca
 
 
 class TestTensorflowPca(unittest.TestCase):

@@ -6,7 +6,7 @@ matplotlib
 mxnet
 IPython
 ipykernel
-tensorflow
+tensorflow==1.1.0
 xmlrunner
 sphinx_rtd_theme
 sphinx_materialdesign_theme
@@ -24,3 +24,4 @@ librosa
 magenta
 Hypothesis >= 3.58
 pytest >= 4.0.2
+facenet==1.0.5

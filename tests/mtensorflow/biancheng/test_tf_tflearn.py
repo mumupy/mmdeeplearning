@@ -6,7 +6,7 @@
 # @Desc    : tflearn测试
 import unittest
 
-from src.mtensorflow import tf_tflearn
+from mtensorflow.biancheng import tf_tflearn
 
 
 class TestTensorflowTfLearn(unittest.TestCase):

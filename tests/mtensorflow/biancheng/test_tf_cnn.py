@@ -6,7 +6,7 @@
 # @Desc    : 卷积神经网络测试
 import unittest
 
-from src.mtensorflow import tf_cnn
+from mtensorflow.biancheng import tf_cnn
 
 
 class TestTensorflowCnn(unittest.TestCase):

@@ -5,7 +5,7 @@
 # @File    : test_tf_constant.py
 # @Desc    : tensorflow常量测试
 import unittest
-from src.mtensorflow import tf_constant
+from mtensorflow.biancheng import tf_constant
 
 
 class TestTensorflowConstant(unittest.TestCase):

@@ -5,7 +5,7 @@
 # @File    : test_tf_bpn.py
 # @Desc    : bpn反向传播
 import unittest
-from src.mtensorflow import tf_bpn
+from mtensorflow.biancheng import tf_bpn
 
 
 class TestTensorflowBpn(unittest.TestCase):

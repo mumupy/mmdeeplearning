@@ -7,7 +7,7 @@
 
 import unittest
 
-from src.mtensorflow import tf_perceptron
+from mtensorflow.biancheng import tf_perceptron
 
 
 class TestTensorflowConstant(unittest.TestCase):

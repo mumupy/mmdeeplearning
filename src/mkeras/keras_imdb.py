@@ -82,5 +82,5 @@ def imdb_keras():
 
 
 if __name__ == "__main__":
-    # imdb_info()
-    imdb_keras()
+    imdb_info()
+    # imdb_keras()

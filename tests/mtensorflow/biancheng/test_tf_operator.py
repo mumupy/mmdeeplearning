@@ -5,7 +5,7 @@
 # @File    : test_tf_matrix.py
 # @Desc    : 矩阵测试
 import unittest
-from src.mtensorflow import tf_operator
+from mtensorflow.biancheng import tf_operator
 
 
 class TestTensorflowOperator(unittest.TestCase):

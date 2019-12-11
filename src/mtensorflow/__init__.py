@@ -6,7 +6,4 @@
 # @Desc    : tensorflow深度学习框架(http://c.biancheng.net/tensorflow/)
 
 
-from . import tf_variable
-from . import tf_constant
-from . import tf_matrix
-from . import tf_operator
+from mtensorflow.biancheng import tf_matrix

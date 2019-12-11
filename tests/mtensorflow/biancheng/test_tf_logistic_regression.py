@@ -5,7 +5,7 @@
 # @File    : test_tf_logistic_regression.py
 # @Desc    : 逻辑回归测试
 import unittest
-from src.mtensorflow import tf_logistic_regression
+from mtensorflow.biancheng import tf_logistic_regression
 
 
 class TestTensorflowConstant(unittest.TestCase):

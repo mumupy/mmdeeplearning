@@ -10,12 +10,13 @@ import os
 import tensorflow as tf
 
 from src.config import logger
+from src.config import root_path
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 def mnist_simple():
-    from tensorflow.contrib.learn.python.learn.datasets.mnist import DataSet
+    from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets
 
     y_ = tf.placeholder("float", [None, 10])
 
@@ -36,7 +37,7 @@ def mnist_simple():
     sess = tf.Session()
     sess.run(init)
 
-    dataset = DataSet()
+    dataset = read_data_sets(os.path.join(root_path, "data", "fashionMNIST"))
     for i in range(1000):
         batch_xs, batch_ys = dataset.next_batch(100)
         sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
