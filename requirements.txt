@@ -6,7 +6,7 @@ matplotlib
 mxnet
 IPython
 ipykernel
-tensorflow==1.1.0
+tensorflow==1.12.2
 xmlrunner
 sphinx_rtd_theme
 sphinx_materialdesign_theme
