@@ -52,14 +52,51 @@ def mnist_dnn():
         keras.layers.Dropout(0.2),
         keras.layers.Dense(10, activation='softmax')
     ])
+    model.summary()
 
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
-                  metrics=['accuracy'])
+                  metrics=['accuracy'], )
 
-    model.fit(x_train, y_train, epochs=5)
+    model.fit(x_train, y_train, epochs=5, verbose=1, validation_split=0.2)
 
-    model.evaluate(x_test, y_test, verbose=2)
+    test_loss, test_acc = model.evaluate(x_test, y_test, verbose=1)
+
+    logger.info('\nTest accuracy: {0} {1}'.format(test_loss, test_acc))
+
+
+def mnist_dnn2():
+    mnist = keras.datasets.mnist
+    (x_train, y_train), (x_test, y_test) = mnist.load_data(os.path.join(root_path, "data", "mnist", "mnist.npz"))
+    x_train, x_test = x_train / 255.0, x_test / 255.0
+
+    x_train = np.reshape(x_train, [-1, 28, 28])
+    x_test = np.reshape(x_test, [-1, 28, 28])
+    y_train = np_utils.to_categorical(y_train, 10)
+    y_test = np_utils.to_categorical(y_test, 10)
+
+    model = keras.models.Sequential()
+    model.add(keras.layers.Dense(128, input_shape=(28, 28)))
+    model.add(keras.layers.Activation("relu"))
+    model.add(keras.layers.Dropout(0.2))
+
+    model.add(keras.layers.Dense(64))
+    model.add(keras.layers.Activation("relu"))
+    model.add(keras.layers.Dropout(0.2))
+
+    # model.add(keras.layers.Flatten())
+    model.add(keras.layers.Reshape((-1,)))
+    model.add(keras.layers.Dense(10))
+    model.add(keras.layers.Activation("softmax"))
+
+    model.summary()
+
+    model.compile(optimizer=keras.optimizers.RMSprop(lr=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
+
+    model.fit(x_train, y_train, batch_size=32, epochs=10, verbose=1, validation_split=0.2)
+
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=32, verbose=1)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def mnist_conv():
@@ -101,8 +138,10 @@ def mnist_conv():
     Y_test = np_utils.to_categorical(y_test, nb_classes)
 
     model = keras.models.Sequential()
-    model.add(
-        Convolution2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, data_format="channels_last"))
+    #可分离卷积
+    model.add(keras.layers.SeparableConv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape,
+                                            data_format="channels_last"))
+    # model.add(Convolution2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, data_format="channels_last"))
     model.add(Activation('relu'))
     model.add(Convolution2D(nb_filters, kernel_size))
     model.add(Activation('relu'))
@@ -138,4 +177,5 @@ def mnist_conv():
 if __name__ == "__main__":
     # mnist_info()
     # mnist_dnn()
+    # mnist_dnn2()
     mnist_conv()

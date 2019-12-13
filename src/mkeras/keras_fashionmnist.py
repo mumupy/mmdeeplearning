@@ -175,7 +175,7 @@ def fashionmnist_loadmodel():
 
 
 if __name__ == "__main__":
-    # fashionmnist_info()
+    fashionmnist_info()
     # fashionmnist_dnn()
-    fashionmnist_cnn()
+    # fashionmnist_cnn()
     # fashionmnist_loadmodel()
