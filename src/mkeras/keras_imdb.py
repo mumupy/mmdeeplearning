@@ -5,9 +5,9 @@
 # @File    : keras_imdb.py
 # @Desc    : imdb电影评价
 import os
-import numpy as np
-from keras.preprocessing import sequence
+
 import keras
+from keras.preprocessing import sequence
 
 imdb = keras.datasets.imdb
 from src.config import logger, root_path
@@ -44,7 +44,8 @@ def imdb_keras():
     影评
     :return:
     """
-    (train_data, train_labels), (test_data, test_labels) = imdb.load_data()
+    (train_data, train_labels), (test_data, test_labels) = imdb.load_data(
+        os.path.join(root_path, "data", "imdb", "imdb.npz"))
     vocab_size = 100000
 
     word_index = imdb.get_word_index(os.path.join(root_path, "data", "imdb", "imdb_word_index.json"))
@@ -54,33 +55,35 @@ def imdb_keras():
     word_index["<UNK>"] = 2  # unknown
     word_index["<UNUSED>"] = 3
 
-    train_data = sequence.pad_sequences(train_data, value=word_index["<PAD>"], padding='post', maxlen=256)
+    train_data = sequence.pad_sequences(train_data, value=word_index["<PAD>"], padding='pre', maxlen=256)
     test_data = sequence.pad_sequences(test_data, value=word_index["<PAD>"], padding='post', maxlen=256)
 
     model = keras.models.Sequential()
     model.add(keras.layers.Embedding(vocab_size, 16))
-    model.add(keras.layers.GlobalAveragePooling1D())
+
+    model.add(keras.layers.Conv1D(32, 5, activation="relu"))
+    model.add(keras.layers.MaxPool1D())
+    model.add(keras.layers.Dropout(0.4))
+
+    model.add(keras.layers.Conv1D(32, 5, activation="relu"))
+    model.add(keras.layers.GlobalMaxPool1D())
+    model.add(keras.layers.Dropout(0.4))
+
     model.add(keras.layers.Dense(16, activation='relu'))
     model.add(keras.layers.Dense(1, activation='sigmoid'))
 
     model.summary()
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    x_val = train_data[:10000]
-    partial_x_train = train_data[10000:]
-
-    y_val = train_labels[:10000]
-    partial_y_train = train_labels[10000:]
-
-    history = model.fit(partial_x_train, partial_y_train, epochs=40, batch_size=512, validation_data=(x_val, y_val),
-                        verbose=1)
+    model.fit(train_data, train_labels, epochs=10, batch_size=64, validation_data=(test_data, test_labels),
+              verbose=1)
 
     # 评估模型
-    results = model.evaluate(test_data, test_labels, verbose=2)
+    results = model.evaluate(test_data, test_labels, verbose=1)
 
     logger.info(results)
 
 
 if __name__ == "__main__":
-    imdb_info()
-    # imdb_keras()
+    # imdb_info()
+    imdb_keras()

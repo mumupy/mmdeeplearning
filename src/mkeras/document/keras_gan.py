@@ -3,7 +3,7 @@
 # @Time    : 2019/12/12 11:39
 # @Author  : ganliang
 # @File    : keras_gan.py
-# @Desc    : TODO
+# @Desc    : gan生成对抗网络
 import os
 
 from PIL import Image
