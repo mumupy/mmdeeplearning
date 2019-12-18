@@ -10,6 +10,7 @@ import keras
 import matplotlib.pyplot as plt
 from keras.datasets import mnist
 from keras.layers import Convolution2D, Activation, MaxPooling2D, Dropout, Flatten, Dense, K, np
+from keras.preprocessing import image
 from keras.utils import np_utils
 
 from src.config import logger, root_path
@@ -138,9 +139,9 @@ def mnist_conv():
     Y_test = np_utils.to_categorical(y_test, nb_classes)
 
     model = keras.models.Sequential()
-    #可分离卷积
+    # 可分离卷积
     model.add(keras.layers.SeparableConv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape,
-                                            data_format="channels_last"))
+                                           data_format="channels_last"))
     # model.add(Convolution2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, data_format="channels_last"))
     model.add(Activation('relu'))
     model.add(Convolution2D(nb_filters, kernel_size))
@@ -155,15 +156,111 @@ def mnist_conv():
     model.add(Activation('softmax'))
 
     model.summary()
+    # keras.utils.vis_utils.plot_model(model, to_file="keras_mnist_cnn.png")
 
     model.compile(loss='categorical_crossentropy',
                   optimizer='adadelta',
                   metrics=['accuracy'])
 
+    tensorBoard_callback = keras.callbacks.TensorBoard(batch_size=batch_size,
+                                                       write_images=True,
+                                                       write_graph=True)
+
     model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epoch,
-              verbose=1, validation_data=(X_test, Y_test))
+              verbose=1, validation_data=(X_test, Y_test), callbacks=[tensorBoard_callback])
 
     test_loss, test_acc = model.evaluate(X_test, Y_test, verbose=0)
+
+    logger.info('Test accuracy: {0} {1}'.format(test_loss, test_acc))
+
+    predictions = model.predict(X_test)
+    predictions = np.argmax(predictions, 1)
+    labels = np.argmax(Y_test, 1)
+    for i in range(10):
+        logger.info("predict:{0} , label:{1}".format(predictions[i], labels[i]))
+
+
+def mnist_cnnv_datagen():
+    """
+    使用keras图片增强
+    :return:
+    """
+    batch_size = 128
+    nb_classes = 10  # 分类数
+    nb_epoch = 12  # 训练轮数
+    # 输入图片的维度
+    img_rows, img_cols = 28, 28
+    # 卷积滤镜的个数
+    nb_filters = 32
+    # 最大池化，池化核大小
+    pool_size = (2, 2)
+    # 卷积核大小
+    kernel_size = (3, 3)
+
+    (X_train, y_train), (X_test, y_test) = mnist.load_data(os.path.join(root_path, "data", "mnist", "mnist.npz"))
+
+    if K.image_dim_ordering() == 'th':
+        # 使用 Theano 的顺序：(conv_dim1, channels, conv_dim2, conv_dim3)
+        X_train = X_train.reshape(X_train.shape[0], 1, img_rows, img_cols)
+        X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
+        input_shape = (1, img_rows, img_cols)
+    else:
+        # 使用 TensorFlow 的顺序：(conv_dim1, conv_dim2, conv_dim3, channels)
+        X_train = X_train.reshape(X_train.shape[0], img_rows, img_cols, 1)
+        X_test = X_test.reshape(X_test.shape[0], img_rows, img_cols, 1)
+        input_shape = (img_rows, img_cols, 1)
+
+    X_train = X_train.astype('float32')
+    X_test = X_test.astype('float32')
+    X_train /= 255
+    X_test /= 255
+
+    Y_train = np_utils.to_categorical(y_train, nb_classes)
+    Y_test = np_utils.to_categorical(y_test, nb_classes)
+
+    model = keras.models.Sequential()
+
+    model.add(Convolution2D(nb_filters, kernel_size, padding='same', input_shape=input_shape,
+                            data_format="channels_last", activation="relu"))
+    model.add(Convolution2D(nb_filters, kernel_size, padding='same', activation="relu"))
+    model.add(Convolution2D(nb_filters, kernel_size, padding='same', activation="relu"))
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.25))
+
+    model.add(Convolution2D(nb_filters * 2, kernel_size, padding='same', activation="relu"))
+    model.add(Convolution2D(nb_filters * 2, kernel_size, padding='same', activation="relu"))
+    model.add(Convolution2D(nb_filters * 2, kernel_size, padding='same', activation="relu"))
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.25))
+
+    model.add(Flatten())
+    model.add(Dense(128, activation="relu"))
+    model.add(Dropout(0.5))
+    model.add(Dense(nb_classes, activation="softmax"))
+
+    model.summary()
+
+    model.compile(loss='categorical_crossentropy',
+                  optimizer='adadelta',
+                  metrics=['accuracy'])
+
+    # 图像增强
+    train_datagen = image.ImageDataGenerator(rotation_range=10, width_shift_range=0.2, height_shift_range=0.2,
+                                             horizontal_flip=True, vertical_flip=False)
+    validation_datagen = image.ImageDataGenerator(rotation_range=10, width_shift_range=0.2, height_shift_range=0.2)
+
+    train_datagen.fit(X_train)
+    validation_datagen.fit(X_test)
+
+    train_generate = train_datagen.flow(X_train, Y_train, batch_size=batch_size)
+    validation_generate = train_datagen.flow(X_test, Y_test, batch_size=batch_size)
+
+    model.fit_generator(train_generate, steps_per_epoch=X_train.shape[0] // batch_size, epochs=nb_epoch, verbose=1,
+                        validation_data=validation_generate, validation_steps=X_test.shape[0] // batch_size, workers=1,
+                        use_multiprocessing=False)
+
+    test_loss, test_acc = model.evaluate_generator(validation_generate, steps=X_test.shape[0] // batch_size, workers=1,
+                                                   use_multiprocessing=False)
 
     logger.info('Test accuracy: {0} {1}'.format(test_loss, test_acc))
 
@@ -178,4 +275,5 @@ if __name__ == "__main__":
     # mnist_info()
     # mnist_dnn()
     # mnist_dnn2()
-    mnist_conv()
+    # mnist_conv()
+    mnist_cnnv_datagen()

@@ -59,7 +59,7 @@ def imdb_keras():
     test_data = sequence.pad_sequences(test_data, value=word_index["<PAD>"], padding='post', maxlen=256)
 
     model = keras.models.Sequential()
-    model.add(keras.layers.Embedding(vocab_size, 16))
+    model.add(keras.layers.Embedding(vocab_size, 16, input_length=256))
 
     model.add(keras.layers.Conv1D(32, 5, activation="relu"))
     model.add(keras.layers.MaxPool1D())

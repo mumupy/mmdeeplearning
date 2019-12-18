@@ -33,6 +33,11 @@
 
 [Neural Machine Translation (seq2seq) Tutorial](https://github.com/tensorflow/nmt/)
 
+[Keras:基于Python的深度学习库](https://keras-cn.readthedocs.io/en/latest/)
+
+
+[deeplearning](http://deeplearning.net/tutorial/)
+
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  
 email:<babymm@aliyun.com>  

@@ -25,3 +25,5 @@ magenta
 Hypothesis >= 3.58
 pytest >= 4.0.2
 tflearn
+graphviz
+pydot

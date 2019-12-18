@@ -26,15 +26,15 @@ def keras_bostonhousing():
 
     # 数据预处理
     model = keras.models.Sequential()
-    model.add(keras.layers.Dense(64, activation="relu", input_shape=(x_train.shape[1],), use_bias=True))
-    model.add(keras.layers.Dense(128, activation="relu"))
-    model.add(keras.layers.Dense(1))
+    model.add(keras.layers.Dense(32, activation="sigmoid", input_shape=(x_train.shape[1],), use_bias=True))
+    # model.add(keras.layers.Dense(128, activation="relu"))
+    model.add(keras.layers.Dense(1, activation="sigmoid"))
 
     model.summary()
 
-    model.compile(optimizer=keras.optimizers.SGD(lr=0.001), loss="binary_crossentropy", metrics=["accuracy"])
+    model.compile(optimizer=keras.optimizers.SGD(lr=0.0001), loss="mse", metrics=[keras.metrics.categorical_accuracy()])
 
-    result = model.fit(x_train, y_train, batch_size=32, epochs=50, verbose=1, validation_split=0.2)
+    result = model.fit(x_train, y_train, batch_size=16, epochs=50, verbose=1, validation_split=0.2)
     # logger.info("loss:{0}".format(loss))
     # logger.info("acc:{0}".format(acc))
     logger.info(result)
