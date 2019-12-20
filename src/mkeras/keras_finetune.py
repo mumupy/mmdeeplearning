@@ -76,25 +76,25 @@ def keras_finetune_train():
     Y_test = keras.utils.np_utils.to_categorical(y_test, 10)
 
     # 加载预训练的模型
-    model = keras.models.load_model(os.path.join(root_path, "tmp", "mnist", "bottleneck", "mnist_finetune_model.h5"))
+    model = keras.models.load_model(os.path.join(root_path, "tmp", "mnist", "finetune", "mnist_finetune_model.h5"))
     for layer in model.layers: layer.trainable = False
     model.summary()
 
     # 添加自己的模型
     top_model = keras.models.Sequential()
+    for layer in model.layers: top_model.add(layer)
     top_model.add(keras.layers.Flatten(input_shape=X_train.shape[1:]))
     top_model.add(keras.layers.Dense(128, activation='relu'))
     top_model.add(keras.layers.Dropout(0.25))
     top_model.add(keras.layers.Dense(10, activation='softmax'))
     top_model.summary()
 
-    model.add(top_model)
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    top_model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    model.fit(X_train, Y_train, epochs=10, batch_size=128, validation_data=(X_test, Y_test))
-    model.save_weights(os.path.join(root_path, "tmp", "mnist", "bottleneck", "bottleneck_fc_model.h5"))
+    top_model.fit(X_train, Y_train, epochs=10, batch_size=128, validation_data=(X_test, Y_test))
+    top_model.save_weights(os.path.join(root_path, "tmp", "mnist", "finetune", "finetune_fc_model.h5"))
 
 
 if __name__ == "__main__":
-    keras_finetune_model()
-    # keras_finetune_train()
+    # keras_finetune_model()
+    keras_finetune_train()
