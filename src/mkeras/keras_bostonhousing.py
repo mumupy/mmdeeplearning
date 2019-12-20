@@ -23,21 +23,25 @@ def keras_bostonhousing():
     # y_train = keras.utils.np_utils.normalize(y_train, 0)[0]
     x_train = x_train / 100.
     y_train = y_train / 100.
+    x_test = x_test / 100.
+    y_test = y_test / 100.
 
     # 数据预处理
     model = keras.models.Sequential()
-    model.add(keras.layers.Dense(32, activation="sigmoid", input_shape=(x_train.shape[1],), use_bias=True))
-    # model.add(keras.layers.Dense(128, activation="relu"))
+    model.add(keras.layers.Dense(32, activation="relu", input_shape=(x_train.shape[1],), use_bias=True))
+    model.add(keras.layers.Dense(128, activation="relu"))
     model.add(keras.layers.Dense(1, activation="sigmoid"))
 
     model.summary()
 
-    model.compile(optimizer=keras.optimizers.SGD(lr=0.0001), loss="mse", metrics=[keras.metrics.categorical_accuracy()])
+    model.compile(optimizer=keras.optimizers.SGD(lr=0.001), loss="mse")
 
     result = model.fit(x_train, y_train, batch_size=16, epochs=50, verbose=1, validation_split=0.2)
-    # logger.info("loss:{0}".format(loss))
-    # logger.info("acc:{0}".format(acc))
     logger.info(result)
+
+    predict_datas = model.predict(x_test, batch_size=64, verbose=1)
+    for i in range(10):
+        logger.info("real {0},predict: {1}".format(y_test[i], predict_datas[i]))
 
 
 if __name__ == "__main__":

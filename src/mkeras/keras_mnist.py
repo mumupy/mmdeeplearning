@@ -9,7 +9,7 @@ import os
 import keras
 import matplotlib.pyplot as plt
 from keras.datasets import mnist
-from keras.layers import Convolution2D, Activation, MaxPooling2D, Dropout, Flatten, Dense, K, np
+from keras.layers import Convolution2D, MaxPooling2D, Dropout, Flatten, Dense, K, np
 from keras.preprocessing import image
 from keras.utils import np_utils
 
@@ -107,7 +107,7 @@ def mnist_conv():
     """
     batch_size = 128
     nb_classes = 10  # 分类数
-    nb_epoch = 12  # 训练轮数
+    nb_epoch = 20  # 训练轮数
     # 输入图片的维度
     img_rows, img_cols = 28, 28
     # 卷积滤镜的个数
@@ -140,20 +140,19 @@ def mnist_conv():
 
     model = keras.models.Sequential()
     # 可分离卷积
-    model.add(keras.layers.SeparableConv2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape,
-                                           data_format="channels_last"))
-    # model.add(Convolution2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape, data_format="channels_last"))
-    model.add(Activation('relu'))
-    model.add(Convolution2D(nb_filters, kernel_size))
-    model.add(Activation('relu'))
+    # model.add(SeparableConv2D(nb_filters, kernel_size, padding='valid', activation="relu",
+    #                           input_shape=input_shape, data_format="channels_last"))
+    model.add(Convolution2D(nb_filters, kernel_size, padding='valid', input_shape=input_shape,
+                            data_format="channels_last", activation="relu"))
+    model.add(Convolution2D(nb_filters, kernel_size, padding="valid", activation="relu",
+                            data_format="channels_last"))
     model.add(MaxPooling2D(pool_size=pool_size))
+
     model.add(Dropout(0.25))
     model.add(Flatten())
-    model.add(Dense(128))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(nb_classes))
-    model.add(Activation('softmax'))
+    model.add(Dense(128, activation="relu"))
+    model.add(Dropout(0.25))
+    model.add(Dense(nb_classes, activation="softmax"))
 
     model.summary()
     # keras.utils.vis_utils.plot_model(model, to_file="keras_mnist_cnn.png")
@@ -162,14 +161,17 @@ def mnist_conv():
                   optimizer='adadelta',
                   metrics=['accuracy'])
 
-    tensorBoard_callback = keras.callbacks.TensorBoard(batch_size=batch_size,
-                                                       write_images=True,
-                                                       write_graph=True)
-
+    os.makedirs(os.path.join(root_path, "tmp", "mnist", "logs"), exist_ok=True)
+    tensorBoard_callback = keras.callbacks.TensorBoard(os.path.join(root_path, "tmp", "mnist", "logs"),
+                                                       batch_size=batch_size, write_images=True, write_graph=True)
+    os.makedirs(os.path.join(root_path, "tmp", "mnist", "models"), exist_ok=True)
+    model_checkpoint = keras.callbacks.ModelCheckpoint(
+        os.path.join(root_path, "tmp", "mnist", "models", "mnist_model_{epoch:02d}-{val_acc:.4f}.h5"),
+        save_best_only=False, save_weights_only=False, monitor='val_acc')
     model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epoch,
-              verbose=1, validation_data=(X_test, Y_test), callbacks=[tensorBoard_callback])
+              verbose=1, validation_data=(X_test, Y_test), callbacks=[tensorBoard_callback, model_checkpoint])
 
-    test_loss, test_acc = model.evaluate(X_test, Y_test, verbose=0)
+    test_loss, test_acc = model.evaluate(X_test, Y_test, verbose=1)
 
     logger.info('Test accuracy: {0} {1}'.format(test_loss, test_acc))
 
@@ -275,5 +277,5 @@ if __name__ == "__main__":
     # mnist_info()
     # mnist_dnn()
     # mnist_dnn2()
-    # mnist_conv()
-    mnist_cnnv_datagen()
+    mnist_conv()
+    # mnist_cnnv_datagen()

@@ -6,4 +6,4 @@
 # @Desc    : tensorflow深度学习框架(http://c.biancheng.net/tensorflow/)
 
 
-from mtensorflow.biancheng import tf_matrix
+from mtensorflow import tf_matrix

@@ -8,8 +8,13 @@ import keras
 import numpy as np
 from keras.preprocessing import text, sequence
 
+def keras_glove_texts():
+    """
+    从glove获取单词
+    :return:
+    """
 
-def keras_glove():
+def keras_glove_train():
     """
     预测新闻类型 监督性任务
     :return:
