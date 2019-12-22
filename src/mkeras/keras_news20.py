@@ -10,6 +10,8 @@ import keras
 import numpy as np
 from keras.preprocessing import text, sequence
 
+from src.config.log import root_path
+
 
 def keras_news20_texts(news_path):
     """
@@ -65,19 +67,36 @@ def keras_news20_train(news_path):
     model.add(keras.layers.Convolution1D(32, 5, activation="relu"))
     model.add(keras.layers.Convolution1D(32, 5, activation="relu"))
     model.add(keras.layers.MaxPooling1D(pool_size=2))
+    model.add(keras.layers.Dropout(0.25))
 
-    model.add(keras.layers.Convolution1D(32, 5, activation="relu"))
-    model.add(keras.layers.Convolution1D(32, 5, activation="relu"))
+    model.add(keras.layers.Convolution1D(64, 5, activation="relu"))
+    model.add(keras.layers.Convolution1D(64, 5, activation="relu"))
     model.add(keras.layers.MaxPooling1D(pool_size=2))
+    model.add(keras.layers.Dropout(0.25))
+
+    # model.add(keras.layers.Convolution1D(128, 5, activation="relu"))
+    # model.add(keras.layers.Convolution1D(128, 5, activation="relu"))
+    # model.add(keras.layers.MaxPooling1D(pool_size=2))
+    # model.add(keras.layers.Dropout(0.25))
 
     model.add(keras.layers.Flatten())
+    model.add(keras.layers.Dense(128, activation="relu"))
     model.add(keras.layers.Dense(len(labels_index), activation="softmax"))
 
     model.summary()
 
     model.compile(optimizer="adadelta", loss="categorical_crossentropy", metrics=["accuracy"])
-    model.fit(datas, labels, batch_size=64, epochs=10, verbose=1, validation_split=0.2, shuffle=True)
+
+    os.makedirs(os.path.join(root_path, "tmp", "news20", "models"), exist_ok=True)
+    model_checkpoint = keras.callbacks.ModelCheckpoint(
+        os.path.join(root_path, "tmp", "news20", "models", "news20_model_{epoch:02d}-{val_acc:.4f}.h5"),
+        save_best_only=False, save_weights_only=False, monitor='val_acc')
+    early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience=2)
+
+    model.fit(datas, labels, batch_size=64, epochs=10, verbose=1, validation_split=0.2, shuffle=True,
+              callbacks=[model_checkpoint, early_stopping])
 
 
 if __name__ == "__main__":
-    keras_news20_train(r"D:\Documents\Downloads\news20\20_newsgroup")
+    # keras_news20_train(r"D:\Documents\Downloads\news20\20_newsgroup")
+    keras_news20_train(r"E:\data\news20\20_newsgroup")

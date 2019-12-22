@@ -35,8 +35,9 @@
 
 [Keras:基于Python的深度学习库](https://keras-cn.readthedocs.io/en/latest/)
 
-
 [deeplearning](http://deeplearning.net/tutorial/)
+
+[keras和tensorflow版本对应](https://www.cnblogs.com/carle-09/p/11661261.html)
 
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  

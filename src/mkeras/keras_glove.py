@@ -76,4 +76,4 @@ def keras_glove_train():
 
 
 if __name__ == "__main__":
-    keras_glove()
+    keras_glove_train()

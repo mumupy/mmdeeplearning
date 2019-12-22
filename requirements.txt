@@ -6,7 +6,6 @@ matplotlib
 mxnet
 IPython
 ipykernel
-tensorflow
 xmlrunner
 sphinx_rtd_theme
 sphinx_materialdesign_theme
@@ -17,6 +16,9 @@ scikit-learn
 pygments
 seaborn
 keras==2.0.8
+keras-models
+tensorflow==1.4.0
+theano==1.0.1
 h5py
 keras-vis
 pillow==4.3.0

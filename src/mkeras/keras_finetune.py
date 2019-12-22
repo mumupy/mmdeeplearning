@@ -3,8 +3,10 @@
 # @Time    : 2019/12/19 21:02
 # @Author  : ganliang
 # @File    : keras_finetune.py
-# @Desc    : 模型预训练
+# @Desc    : 模型预训练,但训练数据不足，可以借用其他已经训练好的模型进行预训练。但是要保持预训练模型和自己的模型是一类模型。
 import os
+# os.environ['KERAS_BACKEND']='theano'
+os.environ['KERAS_BACKEND']='tensorflow'
 
 import keras
 from keras.datasets import mnist
@@ -69,11 +71,11 @@ def keras_finetune_train():
     (X_train, y_train), (X_test, y_test) = mnist.load_data(os.path.join(root_path, "data", "mnist", "mnist.npz"))
     X_train = X_train.astype('float32') / 255
     X_test = X_test.astype('float32') / 255
-    X_train = X_train.reshape(X_train.shape + (1,))
-    X_test = X_test.reshape(X_test.shape + (1,))
+    X_train = X_train.reshape(X_train.shape + (1,))[:1000]
+    X_test = X_test.reshape(X_test.shape + (1,))[:1000]
 
-    Y_train = keras.utils.np_utils.to_categorical(y_train, 10)
-    Y_test = keras.utils.np_utils.to_categorical(y_test, 10)
+    Y_train = keras.utils.np_utils.to_categorical(y_train, 10)[:1000]
+    Y_test = keras.utils.np_utils.to_categorical(y_test, 10)[:1000]
 
     # 加载预训练的模型
     model = keras.models.load_model(os.path.join(root_path, "tmp", "mnist", "finetune", "mnist_finetune_model.h5"))
@@ -85,14 +87,14 @@ def keras_finetune_train():
     for layer in model.layers: top_model.add(layer)
     top_model.add(keras.layers.Flatten(input_shape=X_train.shape[1:]))
     top_model.add(keras.layers.Dense(128, activation='relu'))
-    top_model.add(keras.layers.Dropout(0.25))
+    top_model.add(keras.layers.Dropout(0.5))
     top_model.add(keras.layers.Dense(10, activation='softmax'))
     top_model.summary()
 
     top_model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
     top_model.fit(X_train, Y_train, epochs=10, batch_size=128, validation_data=(X_test, Y_test))
-    top_model.save_weights(os.path.join(root_path, "tmp", "mnist", "finetune", "finetune_fc_model.h5"))
+    top_model.save_weights(os.path.join(root_path, "tmp", "mnist", "finetune", "finetune_sfc_model.h5"))
 
 
 if __name__ == "__main__":
