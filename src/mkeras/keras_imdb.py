@@ -3,7 +3,7 @@
 # @Time    : 2019/10/27 14:58
 # @Author  : ganliang
 # @File    : keras_imdb.py
-# @Desc    : imdb电影评价
+# @Desc    : imdb电影评价,评价为正面1或者反面0
 import os
 
 import keras
@@ -13,7 +13,7 @@ imdb = keras.datasets.imdb
 from src.config import logger, root_path
 
 
-def imdb_info():
+def keras_imdb_info():
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(
         os.path.join(root_path, "data", "imdb", "imdb.npz"))
     logger.info("train data shape {0}".format(train_data.shape))
@@ -39,27 +39,20 @@ def imdb_info():
     logger.info(decode_review(train_data[0]))
 
 
-def imdb_keras():
+def keras_imdb_train():
     """
     影评
     :return:
     """
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(
         os.path.join(root_path, "data", "imdb", "imdb.npz"))
-    vocab_size = 100000
-
     word_index = imdb.get_word_index(os.path.join(root_path, "data", "imdb", "imdb_word_index.json"))
-    word_index = {k: (v + 3) for k, v in word_index.items()}
-    word_index["<PAD>"] = 0
-    word_index["<START>"] = 1
-    word_index["<UNK>"] = 2  # unknown
-    word_index["<UNUSED>"] = 3
 
-    train_data = sequence.pad_sequences(train_data, value=word_index["<PAD>"], padding='pre', maxlen=256)
-    test_data = sequence.pad_sequences(test_data, value=word_index["<PAD>"], padding='post', maxlen=256)
+    train_data = sequence.pad_sequences(train_data, maxlen=256)
+    test_data = sequence.pad_sequences(test_data, maxlen=256)
 
     model = keras.models.Sequential()
-    model.add(keras.layers.Embedding(vocab_size, 16, input_length=256))
+    model.add(keras.layers.Embedding(len(word_index) + 1, 16, input_length=256))
 
     model.add(keras.layers.Conv1D(32, 5, activation="relu"))
     model.add(keras.layers.MaxPool1D())
@@ -85,5 +78,5 @@ def imdb_keras():
 
 
 if __name__ == "__main__":
-    # imdb_info()
-    imdb_keras()
+    # keras_imdb_info()
+    keras_imdb_train()
