@@ -8,7 +8,7 @@ import os
 
 import keras
 from keras.datasets import reuters
-from keras.preprocessing import sequence
+from keras.preprocessing import sequence, text
 from matplotlib import pyplot as plt
 
 from src.config.log import logger, root_path
@@ -60,36 +60,64 @@ def keras_reuters_plotcurve(history):
     plt.plot(epochs, val_loss, 'b', label='Validation loss')
     plt.title('Training and validation loss')
     plt.legend()
+    plt.show()
 
 
-def keras_reuters_mlp():
+def keras_reuters_mlp(num_words=None, maxlen=None, num_categorical=None, batch_size=32, epochs=10,
+                      mode=None):
     """
-    使用mlp多层感知机模式进行情感评估
+    使用mlp多层感知机模式进行情感评估,同时对比自归一化mlp和常规mlp的性能对比
     :return:
     """
     (X_train, y_train), (X_test, y_test) = reuters.load_data(
-        path=os.path.join(root_path, "data", "reuters", "reuters.npz"))
+        path=os.path.join(root_path, "data", "reuters", "reuters.npz"), num_words=num_words)
 
-    num_words = max(max([len(x) for x in X_train]), max([len(x) for x in X_test])) + 1
-    num_classify = max(max(y_train), max(y_test)) + 1
+    if not num_words: num_words = max(max([max(x) for x in X_train]), max([max(x) for x in X_test])) + 1
+    if not maxlen: maxlen = max(max([len(x) for x in X_train]), max([len(x) for x in X_test])) + 1
+    if not num_categorical: num_categorical = max(max(y_train), max(y_test)) + 1
 
-    X_train = sequence.pad_sequences(X_train, maxlen=num_words)
-    y_train = keras.utils.to_categorical(y_train, num_classify)
-    X_test = sequence.pad_sequences(X_test, maxlen=num_words)
-    y_test = keras.utils.to_categorical(y_test, num_classify)
+    tokenizer = text.Tokenizer(num_words=num_words)
+    X_train = tokenizer.sequences_to_matrix(X_train)
+    y_train = keras.utils.to_categorical(y_train, num_categorical)
+    X_test = tokenizer.sequences_to_matrix(X_test)
+    y_test = keras.utils.to_categorical(y_test, num_categorical)
 
     input = keras.layers.Input(shape=(num_words,))
-    x = keras.layers.Dense(32, activation="relu")(input)
-    x = keras.layers.Dense(64, activation="relu")(x)
-    x = keras.layers.Dense(128, activation="relu")(x)
-    x = keras.layers.Dense(num_classify, activation="softmax")(x)
+    # 自归一化snn
+    if mode == "self-normalizing":
+        x = keras.layers.Dense(512, activation=keras.activations.selu, kernel_initializer="lecun_normal")(input)
+        x = keras.layers.AlphaDropout(0.1)(x)
+
+        x = keras.layers.Dense(256, activation="selu", kernel_initializer="lecun_normal")(x)
+        x = keras.layers.AlphaDropout(0.1)(x)
+
+        x = keras.layers.Dense(128, activation="selu", kernel_initializer="lecun_normal")(x)
+        x = keras.layers.AlphaDropout(0.1)(x)
+    else:
+        x = keras.layers.Dense(512, activation="relu", kernel_initializer="glorot_normal")(input)
+        x = keras.layers.BatchNormalization()(x)
+        # x = keras.layers.Dropout(0.4)(x)
+
+        x = keras.layers.Dense(256, activation="relu", kernel_initializer="glorot_normal")(x)
+        x = keras.layers.BatchNormalization()(x)
+        # x = keras.layers.Dropout(0.4)(x)
+
+        x = keras.layers.Dense(128, activation="relu", kernel_initializer="glorot_normal")(x)
+        x = keras.layers.BatchNormalization()(x)
+        # x = keras.layers.Dropout(0.4)(x)
+
+    x = keras.layers.Dense(num_categorical, activation="softmax")(x)
 
     model = keras.models.Model(inputs=input, outputs=x)
     model.summary()
 
-    model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
-    history = model.fit(X_train, y_train, batch_size=64, epochs=10, validation_data=(X_test, y_test))
+    model.compile(optimizer="adadelta", loss="categorical_crossentropy", metrics=["accuracy"])
+    history = model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.2)
     keras_reuters_plotcurve(history)
+
+    score = model.evaluate(X_test, y_test, batch_size=batch_size, verbose=1)
+    logger.info('Test loss:{0}'.format(score[0]))
+    logger.info('Test accuracy:{0}'.format(score[1]))
 
 
 def keras_reuters_cnn():
@@ -224,8 +252,8 @@ def keras_reuters_gru(num_words=None, maxlen=None, num_categorical=None):
 
 if __name__ == "__main__":
     # keras_reuters_info()
-    # keras_reuters_mlp()
+    keras_reuters_mlp(num_words=10000, maxlen=500)
     # keras_reuters_cnn()
     # keras_reuters_rnn(num_words=10000,maxlen=500)
     # keras_reuters_lstm()
-    keras_reuters_gru()
+    # keras_reuters_gru()

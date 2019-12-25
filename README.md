@@ -39,6 +39,7 @@
 
 [keras和tensorflow版本对应](https://www.cnblogs.com/carle-09/p/11661261.html)
 
+[Self-Normalizing Neural Networks(自归一化神经网络）](https://www.dazhuanlan.com/2019/09/26/5d8c25abbf584/)
 ## 联系方式
 **以上观点纯属个人看法，如有不同，欢迎指正。  
 email:<babymm@aliyun.com>  

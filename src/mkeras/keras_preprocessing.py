@@ -27,6 +27,8 @@ def sequence_padsequences():
 
     sequences = tokenizer.texts_to_sequences(texts)
     print(sequence.pad_sequences(sequences, maxlen=10))
+    matrixs = tokenizer.sequences_to_matrix(sequences, mode="binary")
+    print(matrixs)
 
 
 def sequence_make_sampling_table():
@@ -89,9 +91,10 @@ def images_datagen():
 
 
 if __name__ == "__main__":
-    sequence_padsequences()
+    sequence_skipgrams()
+    # sequence_padsequences()
     # text_to_word_sequence()
-    text_one_hot()
+    # text_one_hot()
     # text_tokenizer()
     # image_img_to_array()
     # images_datagen()
