@@ -12,6 +12,10 @@ from src.config.log import logger
 
 
 def keras_cifar_dnn():
+    """
+    cifar图片分类多层神经网络实现
+    :return:
+    """
     (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
 
     # 图像数据预处理
@@ -55,7 +59,7 @@ def keras_cifar_dnn():
 
     model.fit(x_train, y_train, batch_size=64, epochs=10, verbose=1, validation_data=(x_test, y_test))
 
-    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=1)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
     logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 

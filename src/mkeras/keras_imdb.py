@@ -10,6 +10,8 @@ import keras
 import numpy as np
 from keras.preprocessing import sequence, text
 
+from mkeras import keras_history_plotcurve
+
 imdb = keras.datasets.imdb
 from src.config import logger, root_path
 
@@ -70,11 +72,12 @@ def keras_imdb_mlp(num_words=None, maxlen=None):
     model.summary()
 
     model.compile(optimizer="adadelta", loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
 
     # 评估模型
-    results = model.evaluate(x_test, y_test, batch_size=64, verbose=1)
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_cnn(num_words=None, maxlen=None, embedding_dim=128):
@@ -108,11 +111,11 @@ def keras_imdb_cnn(num_words=None, maxlen=None, embedding_dim=128):
     model.summary()
     model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
-
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
     # 评估模型
-    results = model.evaluate(x_test, y_test, verbose=1)
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_rnn(num_words=None, maxlen=None, embedding_dim=128):
@@ -137,11 +140,11 @@ def keras_imdb_rnn(num_words=None, maxlen=None, embedding_dim=128):
     model.summary()
     model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
-
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
     # 评估模型
-    results = model.evaluate(x_test, y_test, batch_size=64, verbose=1)
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_lstm(num_words=None, maxlen=None, embedding_dim=128):
@@ -166,11 +169,11 @@ def keras_imdb_lstm(num_words=None, maxlen=None, embedding_dim=128):
     model.summary()
     model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
-
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
     # 评估模型
-    results = model.evaluate(x_test, y_test, batch_size=64, verbose=1)
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_gru(num_words=None, maxlen=None, embedding_dim=128):
@@ -195,12 +198,12 @@ def keras_imdb_gru(num_words=None, maxlen=None, embedding_dim=128):
     model.summary()
     model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
 
     # 评估模型
-    results = model.evaluate(x_test, y_test, batch_size=64, verbose=1)
-
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, batch_size=64, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_cnn_lstm(num_words=None, maxlen=None, embedding_dim=128):
@@ -225,7 +228,7 @@ def keras_imdb_cnn_lstm(num_words=None, maxlen=None, embedding_dim=128):
     model.add(keras.layers.Dropout(0.4))
 
     model.add(keras.layers.Conv1D(32, 5, activation="relu"))
-    model.add(keras.layers.GlobalMaxPool1D())
+    model.add(keras.layers.MaxPool1D())
     model.add(keras.layers.Dropout(0.4))
 
     model.add(keras.layers.LSTM(64))
@@ -234,11 +237,12 @@ def keras_imdb_cnn_lstm(num_words=None, maxlen=None, embedding_dim=128):
     model.summary()
     model.compile(optimizer="rmsprop", loss='binary_crossentropy', metrics=['accuracy'])
 
-    model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    history = model.fit(x_train, y_train, epochs=10, batch_size=64, validation_split=0.2, verbose=1)
+    keras_history_plotcurve(history)
 
     # 评估模型
-    results = model.evaluate(x_test, y_test, verbose=1)
-    logger.info(results)
+    test_loss, test_accuracy = model.evaluate(x_test, y_test, verbose=0)
+    logger.info("\ntest_loss:{0},test_accuracy:{1}".format(test_loss, test_accuracy))
 
 
 def keras_imdb_fasttext(num_words=None, maxlen=None, batch_size=32, embedding_dims=50, epochs=5, ngram_range=1):
@@ -346,7 +350,8 @@ def keras_imdb_fasttext(num_words=None, maxlen=None, batch_size=32, embedding_di
     model.summary()
 
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_test, y_test))
+    history = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_data=(x_test, y_test))
+    keras_history_plotcurve(history)
 
 
 if __name__ == "__main__":
@@ -356,5 +361,5 @@ if __name__ == "__main__":
     # keras_imdb_rnn()
     # keras_imdb_lstm()
     # keras_imdb_gru()
-    # keras_imdb_cnn_lstm()
-    keras_imdb_fasttext(num_words=20000, maxlen=400, ngram_range=2)
+    keras_imdb_cnn_lstm(num_words=20000, maxlen=400)
+    # keras_imdb_fasttext(num_words=20000, maxlen=400, ngram_range=2)

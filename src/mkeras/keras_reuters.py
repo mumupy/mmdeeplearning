@@ -9,8 +9,8 @@ import os
 import keras
 from keras.datasets import reuters
 from keras.preprocessing import sequence, text
-from matplotlib import pyplot as plt
 
+from mkeras import keras_history_plotcurve
 from src.config.log import logger, root_path
 
 
@@ -34,33 +34,6 @@ def keras_reuters_info():
     logger.info("num_words {0}".format(num_words))
     logger.info("num_classify {0}".format(num_classify))
     logger.info("num_voc {0}".format(num_vocab))
-
-
-def keras_reuters_plotcurve(history):
-    """
-    绘制损失函数
-    :param history:
-    :return:
-    """
-    acc = history.history['acc']
-    val_acc = history.history['val_acc']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
-
-    epochs = range(1, len(acc) + 1)
-
-    plt.plot(epochs, acc, 'bo', label='Training acc')
-    plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation accuracy')
-    plt.legend()
-
-    plt.figure()
-
-    plt.plot(epochs, loss, 'bo', label='Training loss')
-    plt.plot(epochs, val_loss, 'b', label='Validation loss')
-    plt.title('Training and validation loss')
-    plt.legend()
-    plt.show()
 
 
 def keras_reuters_mlp(num_words=None, maxlen=None, num_categorical=None, batch_size=32, epochs=10,
@@ -113,7 +86,7 @@ def keras_reuters_mlp(num_words=None, maxlen=None, num_categorical=None, batch_s
 
     model.compile(optimizer="adadelta", loss="categorical_crossentropy", metrics=["accuracy"])
     history = model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.2)
-    keras_reuters_plotcurve(history)
+    keras_history_plotcurve(history)
 
     score = model.evaluate(X_test, y_test, batch_size=batch_size, verbose=1)
     logger.info('Test loss:{0}'.format(score[0]))
@@ -154,7 +127,7 @@ def keras_reuters_cnn():
 
     model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
     history = model.fit(X_train, y_train, batch_size=64, epochs=10, verbose=1, validation_data=(X_test, y_test))
-    keras_reuters_plotcurve(history)
+    keras_history_plotcurve(history)
 
 
 def keras_reuters_rnn(num_words=None, maxlen=None, num_categorical=None):
@@ -185,7 +158,7 @@ def keras_reuters_rnn(num_words=None, maxlen=None, num_categorical=None):
 
     model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
     history = model.fit(X_train, y_train, batch_size=64, epochs=10, verbose=1, validation_data=(X_test, y_test))
-    keras_reuters_plotcurve(history)
+    keras_history_plotcurve(history)
 
 
 def keras_reuters_lstm(num_words=None, maxlen=None, num_categorical=None):
@@ -216,7 +189,7 @@ def keras_reuters_lstm(num_words=None, maxlen=None, num_categorical=None):
 
     model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
     history = model.fit(X_train, y_train, batch_size=64, epochs=10, verbose=1, validation_data=(X_test, y_test))
-    keras_reuters_plotcurve(history)
+    keras_history_plotcurve(history)
 
 
 def keras_reuters_gru(num_words=None, maxlen=None, num_categorical=None):
@@ -247,7 +220,7 @@ def keras_reuters_gru(num_words=None, maxlen=None, num_categorical=None):
 
     model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
     history = model.fit(X_train, y_train, batch_size=64, epochs=10, verbose=1, validation_data=(X_test, y_test))
-    keras_reuters_plotcurve(history)
+    keras_history_plotcurve(history)
 
 
 if __name__ == "__main__":
