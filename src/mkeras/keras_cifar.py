@@ -11,7 +11,7 @@ import numpy as np
 from src.config.log import logger
 
 
-def keras_cifar_dnn():
+def keras_cifar_cnn():
     """
     cifar图片分类多层神经网络实现
     :return:
@@ -64,4 +64,4 @@ def keras_cifar_dnn():
 
 
 if __name__ == "__main__":
-    keras_cifar_dnn()
+    keras_cifar_cnn()
