@@ -12,3 +12,6 @@ X = np.arange(0, 6, 0.1)
 Y = np.cos(X)
 plt.plot(X, Y)
 plt.show()
+
+severity = np.random.uniform(0, 0.6)
+print(severity)
