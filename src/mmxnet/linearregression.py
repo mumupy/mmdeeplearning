@@ -233,7 +233,6 @@ def house_prise_gulon():
     net.initialize(init.Normal(sigma=0.01))
     loss = gloss.L2Loss()
     trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.03})
-
     num_epochs = 3
     for epoch in range(1, num_epochs + 1):
         for X, y in data_iter:
