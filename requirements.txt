@@ -20,7 +20,7 @@ tensorflow==1.4.0
 theano==1.0.1
 h5py
 keras-vis
-pillow==4.3.0
+pillow==9.0.0
 librosa
 magenta
 Hypothesis >= 3.58
